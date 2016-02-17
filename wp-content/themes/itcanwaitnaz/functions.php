@@ -78,10 +78,13 @@ function child_theme_setup(){
     function custom_hdr_title() {
         ?>
         <div class="icw-title-left one-third first">
-			<h1 class="site-title" itemprop="headline"><a href="http://itcanwaitnaz.vag/">It Can Wait NAZ</a></h1>
+			<a href="http://itcanwaitnaz.vag/">
+				<img src="<?php echo get_stylesheet_directory_uri() . '/images/logo.png'?>" class="icw-hdr-logo">
+			</a>
         </div>
         <div class="icw-title-right two-thirds">
         	<ul class="icw-menu">
+        		<li><a href="http://www.itcanwait.com/apps-and-tools" target="_blank">Apps & Tools</a></li>
         		<li><a href="">Take The Plege</a></li>
 				<li><a href="">Get Involved</a></li>
         	</ul>

@@ -123,27 +123,147 @@ input[type="search"] {
 /* # Defaults
 ---------------------------------------------------------------------------------------------------- */
 
+.icw-hdr-logo{
+	height:130px;
+	width:auto;
+}
+
 .icw-title-left{
-	border:1px solid red;
+	vertical-align: middle;
+	text-align:right;
 }
 .icw-title-right{
-	border:1px solid green;
+	vertical-align: middle;
+	line-height: 100px;
 }
 
-.icw-menu{
+.icw-menu {
 	font-family: "omnes-pro",sans-serif;
-	font-weight:700;
+	font-weight:500;
 	font-style: italic;
+	text-transform: uppercase;
+	font-size:1.2em;
 }
-.icw-menu ul{
-
-}
-.icw-menu ul li{
+.icw-menu li {
 	display:inline-block;
+	margin: 10px 10px;
+}
+.icw-menu li a{
+	color:#757575;
+	padding:4px 8px;
+	border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+}
+.icw-menu li a:hover{
+	background:#f67a00;
+	color:#ffffff;
+}
+
+.post-grid{
+	margin:auto;
+	text-align:center;
+}
+
+.icw-hdr{
+	width:80%;
+	min-height:400px;
+	margin:auto;
+}
+
+.main-splash-left{
+	min-width:100%;
+	min-height:400px;
+	text-align:center;
+	margin:0;
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#049acc+0,52adcc+100 */
+	background: #049acc; /* Old browsers */
+	background: -moz-linear-gradient(left,  #049acc 0%, #52adcc 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(left,  #049acc 0%,#52adcc 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to right,  #049acc 0%,#52adcc 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#049acc', endColorstr='#52adcc',GradientType=1 ); /* IE6-9 */
+}
+
+.main-splash-right{
+	min-width:100%;
+	min-height:400px;
+	text-align:center;
+	margin:0;
+	font-family: "omnes-pro",sans-serif;
+	font-weight:500;
+	font-style: italic;
+	font-size:1.4em;
+	color:#fff;
+	/*content dependant settings (some in media queries) */
+	padding-top:220px;
 }
 
 
+/* ISOTOPE GRID STUFF */
+/*force scrollbar */
+html {overflow-y: scroll;}
 
+* {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+/* clear fix */
+.grid:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.grid-sizer,
+.grid-item {
+    /*width: 350px;*/
+}
+.grid-item{
+    float:left;
+    text-align: center;
+    vertical-align: middle;
+    padding:0px;
+    //height:300px;
+    vertical-align: middle;
+}
+.grid-item a:before{
+    /*VERT ALIGN IMG */
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+
+.grid-item a{
+    vertical-align:middle;
+}
+
+.grid-item img,
+.grid-item--width2 img {
+    margin:auto;
+    max-width:80%;
+    height:auto;
+    max-height:80%;
+    vertical-align: middle;
+    /*    -webkit-box-shadow: -2px 2px 3px -1px rgba(0,0,0,0.2);
+    -moz-box-shadow: -2px 2px 3px -1px rgba(0,0,0,0.2);
+    box-shadow: -2px 2px 3px -1px rgba(0,0,0,0.2);*/
+}
+
+.grid-item--width2 {
+    /*see media queries*/
+    //width: 600px;
+    //height:400px;
+}
+
+.normal-size{
+    /*non-first images*/
+    /*max-height:240px;*/
+}
+
+/* END ISOTOPE */
 
 
 
@@ -576,7 +696,7 @@ th {
 .two-sixths,
 .two-thirds {
 	float: left;
-	margin-left: 2.564102564102564%;
+	/*margin-left: 2.564102564102564%;*/
 }
 
 .one-half,
@@ -1368,8 +1488,16 @@ li.comment {
 }
 
 
+
+
+
+/* --------------------------------------------------------------------------------------------------*/
 /* # Media Queries
 ---------------------------------------------------------------------------------------------------- */
+
+@media only screen and (min-width: 1200px){
+
+}
 
 @media only screen and (max-width: 1200px) {
 
@@ -1473,6 +1601,13 @@ li.comment {
 		margin-right: 0;
 	}
 
+	.icw-menu{ font-size:1em; }
+	.icw-menu li { margin:10 auto; }
+	.icw-title-right{
+		margin:auto;
+		text-align:center;
+		line-height: normal;
+	}
 }
 
 @media only screen and (max-width: 800px) {
@@ -1522,4 +1657,44 @@ li.comment {
 		padding: 40px;
 	}
 
+	.icw-hdr-logo{margin:auto;max-height:90px;width:auto;}
+	.icw-title-left{text-align:center;}
+	.icw-title-right{
+		margin:auto;
+		text-align:center;
+		line-height: normal;
+	}
+	.main-splash-right{
+		/*content dependant settings (some in media queries) */
+		padding-top:220px;
+		font-size:1.2em;
+	}
+
 }
+
+@media only screen and (max-width: 500px) {
+	.icw-hdr-logo{margin:auto;max-height:70px;width:auto;}
+	.icw-title-left{text-align:center;}
+	.icw-title-right{
+		margin:auto;
+		text-align:center;
+		line-height: normal;
+	}
+	.main-splash-right{
+		/*content dependant settings (some in media queries) */
+		padding-top:220px;
+		font-size:1.2em;
+	}
+}
+
+ /*MEDIA QUERY DEBUG ASSISTANCE*/
+ 
+@media only screen and (min-width: 1201px) { body{border-top:2px solid red } }
+@media only screen and (max-width: 1200px) { body{border-top:2px solid blue } }
+@media only screen and (max-width: 960px) { body{border-top:2px solid yellow } }
+@media only screen and (max-width: 800px) { body{border-top:2px solid green } }
+@media only screen and (max-width: 400px) { body{border-top:2px solid orange } }
+
+/* RESPONSIVE NAV HELPERS */
+/*@media only screen and (min-width: 768px) { body{border-top:2px solid orange } }*/ 
+/*@media only screen and (max-width: 767px) { body{border-top:2px solid blue } }*/
