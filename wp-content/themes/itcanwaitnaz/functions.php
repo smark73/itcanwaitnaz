@@ -84,8 +84,8 @@ function child_theme_setup(){
         </div>
         <div class="icw-title-right two-thirds">
         	<ul class="icw-menu">
+        		<li><a href="/take-the-pledge/">Take The Plege</a></li>
         		<li><a href="http://www.itcanwait.com/apps-and-tools" target="_blank">Apps & Tools</a></li>
-        		<li><a href="">Take The Plege</a></li>
 				<li><a href="">Get Involved</a></li>
         	</ul>
         </div>
@@ -102,7 +102,7 @@ function child_theme_setup(){
     function child_custom_footer() {
         ?>
             <p class="copyright" data-enhance="false" data-role="none">
-            	<a href="http://itcanwaitnaz.com/" data-enhance="false" data-role="none">It Can Wait NAZ</a> &nbsp; | &nbsp; <a href="http://www.itcanwait.com" target="_blank">It Can Wait</a> &nbsp; | &nbsp; <a href="/contact-us">Contact Us</a>
+            	<a href="/" data-enhance="false" data-role="none">It Can Wait NAZ</a> &nbsp; | &nbsp; <a href="http://www.itcanwait.com" target="_blank">It Can Wait</a> &nbsp; | &nbsp; <a href="/contact-us">Contact Us</a>
             </p>
         <?php
     }
