@@ -71,6 +71,17 @@ function cust_pg_hdr() {
                     ?>
             </div>
 
+            <div class="one-half first">
+                <div class="main-splash-left-btm">
+                    &nbsp;
+                </div>
+            </div>
+            <div class="one-half">
+                <div class="main-splash-right-btm">
+                    <a class="btn-pledge" href="/take-the-pledge">Take The Pledge</a>
+                </div>
+            </div>
+
         </div>
 
     <?php
@@ -140,6 +151,7 @@ function page_loop(){
                         //populate the caption, but give it hidden class here - still displays on full size
                         echo '<figure class="post-caption">' . apply_filters( 'the_content', get_the_content() ) . '</figure>';
                         echo '</div>';
+
 
 
                     }

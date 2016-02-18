@@ -176,6 +176,8 @@ input[type="search"] {
 	min-height:400px;
 	text-align:center;
 	margin:0;
+	/*border fixes display bug*/
+	border:1px solid transparent;
 	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#049acc+0,52adcc+100 */
 	background: #049acc; /* Old browsers */
 	background: -moz-linear-gradient(left,  #049acc 0%, #52adcc 100%); /* FF3.6-15 */
@@ -183,7 +185,7 @@ input[type="search"] {
 	background: linear-gradient(to right,  #049acc 0%,#52adcc 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#049acc', endColorstr='#52adcc',GradientType=1 ); /* IE6-9 */
 	/*content dependant settings (some in media queries) */
-	padding-top:1%;	
+	padding-top:1%;
 }
 
 .main-splash-right{
@@ -196,16 +198,45 @@ input[type="search"] {
 	font-style: italic;
 	font-size:1.4em;
 	color:#fff;
+	/*border fixes display bug*/
+	border:1px solid #07569b;
 	/*content dependant settings (some in media queries) */
 	padding-top:220px;
 }
 
-
-.font-omnes-med{
-	font-family: "omnes-pro",sans-serif;
-	font-weight:500;
-	font-style: italic;
+.main-splash-left-btm{
+	background:#26a1d5;
+	text-align: center;
+	padding:10px;
+	height:150px;
 }
+
+.main-splash-right-btm{
+	background:#07569b;
+	text-align: center;
+	padding:10px;
+	height:150px;
+}
+
+a.btn-pledge{
+	color:#fff;
+	background: #f17100;
+	padding:4px 8px;
+	border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	font-family: "omnes-pro",sans-serif;
+	font-weight:400;
+	font-style: italic;
+	text-transform: uppercase;
+	font-size:1.2em;
+	margin:20px auto;
+}
+a.btn-pledge:hover{
+	color:#f17100;
+	background: #fff;
+}
+
 
 
 /* ISOTOPE GRID STUFF */
