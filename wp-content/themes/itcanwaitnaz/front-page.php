@@ -88,7 +88,7 @@ function page_loop(){
 
                     <?php
                     $thumbs = new WP_Query(array(
-                        'category_name' => 'uncategorized',
+                        'category_name' => 'celebrities,take-the-pledge-naz',
                         'orderby' => 'rand',
                         ));
 
