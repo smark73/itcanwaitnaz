@@ -1,10 +1,10 @@
 <?php
 // Remove Page/Post Title
-remove_action( 'genesis_post_title', 'genesis_do_post_title' );
-remove_action( 'genesis_entry_header', 'genesis_do_post_title' );
+//remove_action( 'genesis_post_title', 'genesis_do_post_title' );
+//remove_action( 'genesis_entry_header', 'genesis_do_post_title' );
 
 //* Remove the post meta function
-remove_action( 'genesis_after_post_content', 'genesis_post_meta' );
+//remove_action( 'genesis_after_post_content', 'genesis_post_meta' );
 
 
 
@@ -128,28 +128,24 @@ function page_loop(){
                         //[3] => boolean: true if $url is a resized image, false if it is the original or if no image is available.
                         $full_img = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full' );
                         $lg_img = wp_get_attachment_image_src( get_post_thumbnail_id(), 'large' );
-      
-                        // create 1 larger image
-                        $el+=1;
-                        $big_grid_class_x = 'grid-item--width2';
-                        if( $el <= 2 ){
-                             $big_grid_class = $big_grid_class_x;
-                             $wp_img_size = 'large';
-                        } else {
-                             $big_grid_class= 'normal-size';
-                             $wp_img_size = 'medium';
-                        }
-                        
-                        //generate random background color for each grid-item
-                        //$rand_num2 = rand(23,37)/100;
                         
                         //populate the data-index attr with the array of indexes
                         $this_index = $el - 1;
 
-                        echo '<div class="grid-item ' . $big_grid_class . " " . $this_cats . '">';
-                        echo '<a href="' . $full_img[0] . '"data-size="' . $full_img[1] . 'x' . $full_img[2] . '" data-med="' . $lg_img[0] .'" data-med-size="' . $lg_img[1] . 'x' . $lg_img[2] . '" data-index="' . $this_index . '" data-author="It Can Wait">' . get_the_post_thumbnail( $post->ID, "medium" ) . '</a>';
-                        //populate the caption, but give it hidden class here - still displays on full size
-                        echo '<figure class="post-caption">' . apply_filters( 'the_content', get_the_content() ) . '</figure>';
+                        $pledge_slug = $post->post_name;
+
+                        echo '<div class="grid-item normal-size ' . $this_cats . '">';
+
+                        echo '<div class="pledges">';
+                        //check if has featured image, if so, use it, else use title
+                        echo '<a href="' . $pledge_slug . '">' . get_the_post_thumbnail( $post->ID, "thumbnail" ) . '</a>';
+                        the_title('<figure class="pledge-title">', '</figure>', true);
+                        
+                        //echo apply_filters( 'the_content', get_the_content() );
+                        the_content();
+                        echo '</div>';
+
+
                         echo '</div>';
 
 
