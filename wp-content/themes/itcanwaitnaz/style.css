@@ -182,6 +182,8 @@ input[type="search"] {
 	background: -webkit-linear-gradient(left,  #049acc 0%,#52adcc 100%); /* Chrome10-25,Safari5.1-6 */
 	background: linear-gradient(to right,  #049acc 0%,#52adcc 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#049acc', endColorstr='#52adcc',GradientType=1 ); /* IE6-9 */
+	/*content dependant settings (some in media queries) */
+	padding-top:1%;	
 }
 
 .main-splash-right{
