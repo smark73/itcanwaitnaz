@@ -78,7 +78,7 @@ function child_theme_setup(){
     function custom_hdr_title() {
         ?>
         <div class="icw-title-left one-third first">
-			<a href="http://itcanwaitnaz.vag/">
+			<a href="/">
 				<img src="<?php echo get_stylesheet_directory_uri() . '/images/logo.png'?>" class="icw-hdr-logo">
 			</a>
         </div>
