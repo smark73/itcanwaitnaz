@@ -257,7 +257,7 @@ a.btn-pledge:hover{
 /* FRONT PAGE PLEDGES */
 /*wraps each pledge content in front page grid*/
 .pledges{
-	margin:1%;
+	margin:2%;
 	font-size:0.8em;
 	font-weight:500;
 	color:#757575;

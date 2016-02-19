@@ -139,7 +139,7 @@ function page_loop(){
                         echo '<div class="pledges">';
                         //check if has featured image, if so, use it, else use title
                         echo '<a href="' . $pledge_slug . '">' . get_the_post_thumbnail( $post->ID, "thumbnail" ) . '</a>';
-                        the_title('<figure class="pledge-title">', '</figure>', true);
+                        the_title('<a href="' . $pledge_slug .'"><figure class="pledge-title">', '</figure></a>', true);
                         
                         //echo apply_filters( 'the_content', get_the_content() );
                         the_content();
