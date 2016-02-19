@@ -160,11 +160,6 @@ input[type="search"] {
 	color:#ffffff;
 }
 
-.post-grid{
-	margin:auto;
-	text-align:center;
-}
-
 .icw-hdr{
 	width:80%;
 	min-height:400px;
@@ -255,15 +250,24 @@ a.btn-pledge:hover{
 }
 
 /* FRONT PAGE PLEDGES */
+
+.pledge-grid-wrap{
+	margin:auto;
+	width:100%;
+	text-align: center;
+}
+
 /*wraps each pledge content in front page grid*/
 .pledges{
-	margin:2%;
+	/*see media queries - sets each pledge responsivewidth*/
+	margin:2% auto;
+	padding:2px;
 	font-size:0.8em;
 	font-weight:500;
 	color:#757575;
+    border-bottom:1px solid #e4ecf0;
 }
 .pledge-title{
-	z-index:100;
 	font-family: "omnes-pro",sans-serif;
 	color:#379bcd;
 	font-size:1em;
@@ -281,72 +285,6 @@ a.btn-pledge:hover{
 	-webkit-border-radius:50%;
 	-moz-border-radius:50%;
 }
-
-/* ISOTOPE GRID STUFF */
-/*force scrollbar */
-html {overflow-y: scroll;}
-
-* {
-  -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
-}
-
-/* clear fix */
-.grid:after {
-  content: '';
-  display: block;
-  clear: both;
-}
-
-.grid-sizer,
-.grid-item {
-    /*width: 350px;*/
-}
-.grid-item{
-    float:left;
-    text-align: center;
-    vertical-align: middle;
-    padding:0px;
-    //height:300px;
-    vertical-align: middle;
-}
-.grid-item a:before{
-    /*VERT ALIGN IMG */
-    content: '';
-    display: inline-block;
-    height: 100%;
-    vertical-align: middle;
-}
-
-.grid-item a{
-    vertical-align:middle;
-}
-
-.grid-item img,
-.grid-item--width2 img {
-    margin:auto;
-    max-width:80%;
-    height:auto;
-    max-height:80%;
-    vertical-align: middle;
-    /*    -webkit-box-shadow: -2px 2px 3px -1px rgba(0,0,0,0.2);
-    -moz-box-shadow: -2px 2px 3px -1px rgba(0,0,0,0.2);
-    box-shadow: -2px 2px 3px -1px rgba(0,0,0,0.2);*/
-}
-
-.grid-item--width2 {
-    /*see media queries*/
-    //width: 600px;
-    //height:400px;
-}
-
-.normal-size{
-    /*non-first images*/
-    /*max-height:240px;*/
-}
-
-/* END ISOTOPE */
 
 
 
@@ -1593,6 +1531,8 @@ li.comment {
 
 @media only screen and (min-width: 1200px){
 
+	.pledges{ width:33%; }
+
 }
 
 @media only screen and (max-width: 1200px) {
@@ -1630,6 +1570,8 @@ li.comment {
 	.footer-widgets-1 {
 		margin-right: 30px;
 	}
+
+	.pledges{ width:33%; }
 
 }
 
@@ -1704,6 +1646,8 @@ li.comment {
 		text-align:center;
 		line-height: normal;
 	}
+
+	.pledges{ width:50%; }
 }
 
 @media only screen and (max-width: 800px) {
@@ -1766,6 +1710,8 @@ li.comment {
 		font-size:1.2em;
 	}
 
+	.pledges{ width:100%; }
+
 }
 
 @media only screen and (max-width: 500px) {
@@ -1781,6 +1727,8 @@ li.comment {
 		padding-top:220px;
 		font-size:1.2em;
 	}
+
+	.pledges{ width:100%; }
 }
 
  /*MEDIA QUERY DEBUG ASSISTANCE*/

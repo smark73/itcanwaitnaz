@@ -62,10 +62,10 @@ function child_theme_setup(){
 
 
 	// ---------- ENQUE STYLES and SCRIPTS -------------------
-    add_action( 'genesis_meta', 'add_reqs_to_head' );
+    //add_action( 'genesis_meta', 'add_reqs_to_head' );
     function add_reqs_to_head() {
-        wp_register_script('isotope', '//cdnjs.cloudflare.com/ajax/libs/jquery.isotope/2.2.0/isotope.pkgd.min.js');
-        wp_enqueue_script('isotope', '//cdnjs.cloudflare.com/ajax/libs/jquery.isotope/2.2.0/isotope.pkgd.min.js', true);
+        //wp_register_script('isotope', '//cdnjs.cloudflare.com/ajax/libs/jquery.isotope/2.2.0/isotope.pkgd.min.js');
+        //wp_enqueue_script('isotope', '//cdnjs.cloudflare.com/ajax/libs/jquery.isotope/2.2.0/isotope.pkgd.min.js', true);
     }
 	// --------- END ENQUE STYLES and SCRIPTS -------------------
 

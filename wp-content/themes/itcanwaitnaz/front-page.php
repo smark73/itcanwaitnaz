@@ -8,7 +8,6 @@
 
 
 
-
 // custom page header
 add_action( 'genesis_after_header', 'cust_pg_hdr' );
 function cust_pg_hdr() {
@@ -95,20 +94,23 @@ add_action( 'genesis_loop', 'page_loop' );
 
 function page_loop(){
     ?>
-            <div class="post-grid grid">
-
-                    <?php
-                    $thumbs = new WP_Query(array(
+            <div class="pledge-grid-wrap">
+                <?php
+                    $pledges = new WP_Query(array(
                         'category_name' => 'celebrities,take-the-pledge-naz',
                         'orderby' => 'rand',
                         ));
-
-                    // init vars to create 1 larger image
-                    $el='';
                     
-                    while ( $thumbs->have_posts() ) {
-                        $thumbs->the_post();
+                    while ( $pledges->have_posts() ) {
+                        $pledges->the_post();
                         global $post;
+
+                        //check if first post in row of 3 to give the 'first' class
+                        if( 0 == $pledges->current_post || 0 == $pledges->current_post % 3 ){
+                            $checkIfFirst = 'first';
+                        } else {
+                            $checkIfFirst = '';
+                        }
                         
                         // get categories to add as classes for sorting with isotope
                         $post_cats = wp_get_post_categories( $post->ID );
@@ -121,52 +123,34 @@ function page_loop(){
                             $this_cats .= " ";
                         }
                         
-                        //wp_get_attachment_image_src($attachment_id) returns an array with
-                        //[0] => url
-                        //[1] => width
-                        //[2] => height
-                        //[3] => boolean: true if $url is a resized image, false if it is the original or if no image is available.
-                        $full_img = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full' );
-                        $lg_img = wp_get_attachment_image_src( get_post_thumbnail_id(), 'large' );
-                        
-                        //populate the data-index attr with the array of indexes
-                        $this_index = $el - 1;
-
                         $pledge_slug = $post->post_name;
 
-                        echo '<div class="grid-item normal-size ' . $this_cats . '">';
+                        //clear floats before we start the row
+                        //if ($checkIfFirst === 'first'){
+                            //echo '<div class="clearfix"></div>';
+                        //}
 
-                        echo '<div class="pledges">';
-                        //check if has featured image, if so, use it, else use title
+                        echo '<div class="one-third pledges ' . $this_cats . ' ' . $checkIfFirst . '">';
+
                         echo '<a href="' . $pledge_slug . '">' . get_the_post_thumbnail( $post->ID, "thumbnail" ) . '</a>';
                         the_title('<a href="' . $pledge_slug .'"><figure class="pledge-title">', '</figure></a>', true);
-                        
                         //echo apply_filters( 'the_content', get_the_content() );
                         the_content();
-                        echo '</div>';
-
 
                         echo '</div>';
+
 
 
 
                     }
-                    ?>
-                </div>
+                ?>
+
             </div>
 
 
     <?php
         wp_reset_query();
     
-}
-
-
-add_action('genesis_after_footer', 'add_scripts_to_btm');
-function add_scripts_to_btm() {
-    ?>
-         <script type="text/javascript" src="/wp-content/themes/itcanwaitnaz/js/scripts.js"></script>
-    <?php
 }
 
 
