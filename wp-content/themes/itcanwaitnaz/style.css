@@ -165,6 +165,11 @@ input[type="search"] {
 	min-height:400px;
 	margin:auto;
 }
+.main-splash-left-wrap{
+	width:100%;
+	height:100%;
+	background:#56c4f3;
+}
 
 .main-splash-left{
 	min-width:100%;
@@ -173,12 +178,6 @@ input[type="search"] {
 	margin:0;
 	/*border fixes display bug*/
 	border:1px solid transparent;
-	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#049acc+0,52adcc+100 */
-	background: #049acc; /* Old browsers */
-	background: -moz-linear-gradient(left,  #049acc 0%, #52adcc 100%); /* FF3.6-15 */
-	background: -webkit-linear-gradient(left,  #049acc 0%,#52adcc 100%); /* Chrome10-25,Safari5.1-6 */
-	background: linear-gradient(to right,  #049acc 0%,#52adcc 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#049acc', endColorstr='#52adcc',GradientType=1 ); /* IE6-9 */
 	/*content dependant settings (some in media queries) */
 	padding-top:1%;
 }
@@ -203,15 +202,30 @@ input[type="search"] {
 	background:#26a1d5;
 	text-align: center;
 	padding:10px;
-	height:150px;
+	min-height:150px;
+	color:#fff;
+	font-family: "omnes-pro",sans-serif;
 }
 
 .main-splash-right-btm{
 	background:#07569b;
 	text-align: center;
 	padding:10px;
-	height:150px;
+	min-height:150px;
 }
+
+.main-splash-left-btm p{
+	/* see media queries for size*/
+	font-weight:500;
+}
+.main-splash-left-btm p:first-child{
+	/* see media queries for size*/
+	font-weight:700;
+	font-style: italic;
+	margin-bottom:10px;
+	padding-bottom:0;
+}
+
 
 a.btn-pledge{
 	color:#fff;
@@ -1532,7 +1546,8 @@ li.comment {
 @media only screen and (min-width: 1200px){
 
 	.pledges{ width:33%; }
-
+	.main-splash-left-btm p{ font-size:1em;	}
+	.main-splash-left-btm p:first-child{ font-size:1.5em; }
 }
 
 @media only screen and (max-width: 1200px) {
@@ -1572,6 +1587,9 @@ li.comment {
 	}
 
 	.pledges{ width:33%; }
+
+	.main-splash-left-btm p{ font-size:0.9em;	}
+	.main-splash-left-btm p:first-child{ font-size:1.2em; }
 
 }
 
@@ -1648,6 +1666,10 @@ li.comment {
 	}
 
 	.pledges{ width:50%; }
+
+	.main-splash-left-btm p{ font-size:0.8em;	}
+	.main-splash-left-btm p:first-child{ font-size:1em; }
+
 }
 
 @media only screen and (max-width: 800px) {
@@ -1712,6 +1734,8 @@ li.comment {
 
 	.pledges{ width:100%; }
 
+	.main-splash-left-btm p{ font-size:1em;	}
+	.main-splash-left-btm p:first-child{ font-size:1.5em; }
 }
 
 @media only screen and (max-width: 500px) {
@@ -1729,6 +1753,9 @@ li.comment {
 	}
 
 	.pledges{ width:100%; }
+
+	.main-splash-left-btm p{ font-size:1em;	}
+	.main-splash-left-btm p:first-child{ font-size:1.5em; }
 }
 
  /*MEDIA QUERY DEBUG ASSISTANCE*/

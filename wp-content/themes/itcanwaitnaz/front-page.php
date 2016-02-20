@@ -15,6 +15,7 @@ function cust_pg_hdr() {
         <div class="icw-hdr">
 
             <div class="one-half first">
+                <div class="main-splash-left-wrap">
                     <?php
                     $msplash_left_args = array(
                         'post_type' => 'page',
@@ -34,15 +35,22 @@ function cust_pg_hdr() {
                             //$full_img = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full' );
                             $the_img = wp_get_attachment_image_src( get_post_thumbnail_id(), 'large' );
   
-                            echo '<div class="main-splash-left">';
+                            echo '<div class="main-splash-left" style="background:url(' . $the_img[0] . ');background-size:contain;background-repeat:no-repeat;background-position:top center;">';
                             the_content();
                             echo '</div>';
                         }
                     }
                     ?>
+
+                    <div class="main-splash-left-btm">
+                        <p>Take The Pledge and Win This Car!</p>
+                        <p>We're giving away this car and more!  All you need to do is take the pledge!</p>
+                    </div>
+                </div>
             </div>
 
             <div class="one-half">
+                <div class="main-splash-right-wrap">
                     <?php
                     $msplash_right_args = array(
                         'post_type' => 'page',
@@ -68,16 +76,9 @@ function cust_pg_hdr() {
                         }
                     }
                     ?>
-            </div>
-
-            <div class="one-half first">
-                <div class="main-splash-left-btm">
-                    &nbsp;
-                </div>
-            </div>
-            <div class="one-half">
-                <div class="main-splash-right-btm">
-                    <a class="btn-pledge" href="/take-the-pledge">Take The Pledge</a>
+                    <div class="main-splash-right-btm">
+                        <a class="btn-pledge" href="/take-the-pledge">Take The Pledge</a>
+                    </div>
                 </div>
             </div>
 
