@@ -131,7 +131,7 @@ function page_loop(){
                             //echo '<div class="clearfix"></div>';
                         //}
 
-                        echo '<div class="one-third pledges ' . $this_cats . ' ' . $checkIfFirst . '">';
+                        echo '<div class="one-third pledges ' . $this_cats . '">';
 
                         echo '<a href="' . $pledge_slug . '">' . get_the_post_thumbnail( $post->ID, "thumbnail" ) . '</a>';
                         the_title('<a href="' . $pledge_slug .'"><figure class="pledge-title">', '</figure></a>', true);
