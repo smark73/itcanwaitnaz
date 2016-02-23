@@ -110,6 +110,31 @@ function child_theme_setup(){
 
 
 
+
+    // -------- POSTS ----------------
+
+	//* Customize the post info function
+	add_filter( 'genesis_post_info', 'sp_post_info_filter' );
+	function sp_post_info_filter($post_info) {
+	if ( !is_page() ) {
+		$post_info = 'Pledged on [post_date]';
+		return $post_info;
+	}}
+
+	//* Customize the post meta function
+	add_filter( 'genesis_post_meta', 'sp_post_meta_filter' );
+	function sp_post_meta_filter($post_meta) {
+	if ( !is_page() ) {
+		//$post_meta = '[post_categories before="See All Pledges: "] [post_tags before="Tagged: "]';
+		$post_meta = '';
+		return $post_meta;
+	}}
+
+	// -------- END POSTS ----------------
+
+
+
+
     //-------- ADMIN CUSTOMIZATIONS --------------
 	// add more buttons to editor
 	function add_more_buttons($buttons) {
