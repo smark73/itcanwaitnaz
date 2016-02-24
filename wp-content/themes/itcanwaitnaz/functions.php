@@ -85,8 +85,8 @@ function child_theme_setup(){
         <div class="icw-title-right two-thirds">
         	<ul class="icw-menu">
         		<li><a href="/take-the-pledge/">Take The Pledge</a></li>
-        		<li><a href="http://www.itcanwait.com/apps-and-tools" target="_blank">Apps & Tools</a></li>
-				<li><a href="">Get Involved</a></li>
+        		<li><a href="/learn">Learn</a></li>
+				<li><a href="/our-sponsors">Our Sponsors</a></li>
         	</ul>
         </div>
         <?php

@@ -105,13 +105,6 @@ function page_loop(){
                     while ( $pledges->have_posts() ) {
                         $pledges->the_post();
                         global $post;
-
-                        //check if first post in row of 3 to give the 'first' class
-                        if( 0 == $pledges->current_post || 0 == $pledges->current_post % 3 ){
-                            $checkIfFirst = 'first';
-                        } else {
-                            $checkIfFirst = '';
-                        }
                         
                         // get categories to add as classes for sorting with isotope
                         $post_cats = wp_get_post_categories( $post->ID );
@@ -124,21 +117,21 @@ function page_loop(){
                             $this_cats .= " ";
                         }
                         
+                        //slug for the link
                         $pledge_slug = $post->post_name;
 
-                        //clear floats before we start the row
-                        //if ($checkIfFirst === 'first'){
-                            //echo '<div class="clearfix"></div>';
-                        //}
+                        //wrap the pledge div with link
+                        echo '<a href="' . $pledge_slug . '"><div class="one-third pledges ' . $this_cats . '">';
 
-                        echo '<div class="one-third pledges ' . $this_cats . '">';
+                        echo get_the_post_thumbnail( $post->ID, "thumbnail" );
+                        the_title('<figure class="pledge-title">', '</figure>', true);
+                        //echo '<a href="' . $pledge_slug . '">' . get_the_post_thumbnail( $post->ID, "thumbnail" ) . '</a>';
+                        //the_title('<a href="' . $pledge_slug .'"><figure class="pledge-title">', '</figure></a>', true);
 
-                        echo '<a href="' . $pledge_slug . '">' . get_the_post_thumbnail( $post->ID, "thumbnail" ) . '</a>';
-                        the_title('<a href="' . $pledge_slug .'"><figure class="pledge-title">', '</figure></a>', true);
                         //echo apply_filters( 'the_content', get_the_content() );
                         the_content();
 
-                        echo '</div>';
+                        echo '</div></a>';
 
 
 

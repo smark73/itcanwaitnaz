@@ -297,6 +297,14 @@ a.btn-pledge:hover{
 	color:#757575;
     border-bottom:1px solid #e4ecf0;
 }
+.pledges:hover{
+	background-color:#d6f3ff;
+	-webkit-transition: background-color 100ms linear;
+    -moz-transition: background-color 100ms linear;
+    -o-transition: background-color 100ms linear;
+    -ms-transition: background-color 100ms linear;
+    transition: background-color 100ms linear;
+}
 .pledge-title{
 	font-family: "omnes-pro",sans-serif;
 	color:#379bcd;
