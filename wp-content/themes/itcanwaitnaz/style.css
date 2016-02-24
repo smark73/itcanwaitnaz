@@ -296,6 +296,7 @@ a.btn-pledge:hover{
 	font-weight:500;
 	color:#757575;
     border-bottom:1px solid #e4ecf0;
+    overflow: hidden;
 }
 .pledges:hover{
 	background-color:#d6f3ff;
