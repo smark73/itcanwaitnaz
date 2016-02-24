@@ -96,46 +96,96 @@ add_action( 'genesis_loop', 'page_loop' );
 function page_loop(){
     ?>
             <div class="pledge-grid-wrap">
+
                 <?php
+                    // STICKY POSTS
                     $pledges = new WP_Query(array(
                         'category_name' => 'celebrities,take-the-pledge-naz',
                         'orderby' => 'rand',
                         ));
                     
                     while ( $pledges->have_posts() ) {
+
                         $pledges->the_post();
                         global $post;
-                        
-                        // get categories to add as classes for sorting with isotope
-                        $post_cats = wp_get_post_categories( $post->ID );
-                        
-                        $this_cats = '';
-                        
-                        foreach( $post_cats as $c ){
-                            $cat = get_category( $c );
-                            $this_cats .= $cat->slug;
-                            $this_cats .= " ";
+
+                        if(is_sticky($post->ID)){
+                            
+                            // get categories to add as classes for sorting with isotope
+                            $post_cats = wp_get_post_categories( $post->ID );
+                            
+                            $this_cats = '';
+                            
+                            foreach( $post_cats as $c ){
+                                $cat = get_category( $c );
+                                $this_cats .= $cat->slug;
+                                $this_cats .= " ";
+                            }
+                            
+                            //slug for the link
+                            $pledge_slug = $post->post_name;
+
+                            //wrap the pledge div with link
+                            echo '<a href="' . $pledge_slug . '"><div class="one-third pledges-sticky ' . $this_cats . '">';
+
+                            echo get_the_post_thumbnail( $post->ID, "thumbnail" );
+                            the_title('<figure class="pledge-title">', '</figure>', true);
+                            //echo '<a href="' . $pledge_slug . '">' . get_the_post_thumbnail( $post->ID, "thumbnail" ) . '</a>';
+                            //the_title('<a href="' . $pledge_slug .'"><figure class="pledge-title">', '</figure></a>', true);
+
+                            //echo apply_filters( 'the_content', get_the_content() );
+                            the_content();
+
+                            echo '</div></a>';
+
                         }
-                        
-                        //slug for the link
-                        $pledge_slug = $post->post_name;
-
-                        //wrap the pledge div with link
-                        echo '<a href="' . $pledge_slug . '"><div class="one-third pledges ' . $this_cats . '">';
-
-                        echo get_the_post_thumbnail( $post->ID, "thumbnail" );
-                        the_title('<figure class="pledge-title">', '</figure>', true);
-                        //echo '<a href="' . $pledge_slug . '">' . get_the_post_thumbnail( $post->ID, "thumbnail" ) . '</a>';
-                        //the_title('<a href="' . $pledge_slug .'"><figure class="pledge-title">', '</figure></a>', true);
-
-                        //echo apply_filters( 'the_content', get_the_content() );
-                        the_content();
-
-                        echo '</div></a>';
+                    }
+                ?>
 
 
 
+                <?php
+                    //NOT STICKY POSTS
+                    $pledges = new WP_Query(array(
+                        'category_name' => 'celebrities,take-the-pledge-naz',
+                        'orderby' => 'rand',
+                        ));
+                    
+                    while ( $pledges->have_posts() ) {
 
+                        $pledges->the_post();
+                        global $post;
+
+                        if(! is_sticky($post->ID)){
+                            
+                            // get categories to add as classes for sorting with isotope
+                            $post_cats = wp_get_post_categories( $post->ID );
+                            
+                            $this_cats = '';
+                            
+                            foreach( $post_cats as $c ){
+                                $cat = get_category( $c );
+                                $this_cats .= $cat->slug;
+                                $this_cats .= " ";
+                            }
+                            
+                            //slug for the link
+                            $pledge_slug = $post->post_name;
+
+                            //wrap the pledge div with link
+                            echo '<a href="' . $pledge_slug . '"><div class="one-fourth pledges ' . $this_cats . '">';
+
+                            echo get_the_post_thumbnail( $post->ID, "thumbnail" );
+                            the_title('<figure class="pledge-title">', '</figure>', true);
+                            //echo '<a href="' . $pledge_slug . '">' . get_the_post_thumbnail( $post->ID, "thumbnail" ) . '</a>';
+                            //the_title('<a href="' . $pledge_slug .'"><figure class="pledge-title">', '</figure></a>', true);
+
+                            //echo apply_filters( 'the_content', get_the_content() );
+                            the_content();
+
+                            echo '</div></a>';
+
+                        }
                     }
                 ?>
 

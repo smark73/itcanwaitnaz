@@ -263,6 +263,7 @@ a.btn-pledge:hover{
 }
 
 .light-gradient{
+/*not used*/
 	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#1ba0cc+1,51accc+100 */
 	background: #1ba0cc; /* Old browsers */
 	background: -moz-linear-gradient(left,  #1ba0cc 1%, #51accc 100%); /* FF3.6-15 */
@@ -271,6 +272,7 @@ a.btn-pledge:hover{
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1ba0cc', endColorstr='#51accc',GradientType=1 ); /* IE6-9 */
 }
 .lightest-gradient{
+/*not used*/
 	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#d4edf4+0,ffffff+47 */
 	background: #d4edf4; /* Old browsers */
 	background: -moz-linear-gradient(-45deg,  #d4edf4 0%, #ffffff 47%); /* FF3.6-15 */
@@ -288,16 +290,19 @@ a.btn-pledge:hover{
 }
 
 /*wraps each pledge content in front page grid*/
+.pledges-sticky,
 .pledges{
 	/*see media queries - sets each pledge responsivewidth*/
 	margin:2% auto;
 	padding:2px;
-	font-size:0.8em;
+	font-size:0.7em;
+	line-height: 1;
 	font-weight:500;
 	color:#757575;
     border-bottom:1px solid #e4ecf0;
     overflow: hidden;
 }
+.pledges-sticky:hover,
 .pledges:hover{
 	background-color:#d6f3ff;
 	-webkit-transition: background-color 100ms linear;
@@ -314,11 +319,13 @@ a.btn-pledge:hover{
 	margin:0 auto;
 	padding:0;
 }
+.pledges-sticky p,
 .pledges p{
 	margin:4px;
 }
-.pledge-photo,
-.pledges a img{
+
+.pledges-sticky img,
+.pledges img{
 	width:150px;
 	height:150px;
 	margin:auto;
@@ -1573,7 +1580,14 @@ li.comment {
 
 @media only screen and (min-width: 1200px){
 
-	.pledges{ width:33%; height:350px;}
+	.pledges-sticky{
+		width:33%;
+		height:350px;
+	}
+	.pledges{
+		width:25%;
+		height:200px;
+	}
 	.main-splash-left-btm p{ font-size:1em;	}
 	.main-splash-left-btm p:first-child{ font-size:1.5em; }
 }
@@ -1614,7 +1628,10 @@ li.comment {
 		margin-right: 30px;
 	}
 
-	.pledges{ width:33%; height:320px;}
+	.pledges{
+		width:25%;
+		height:200px;
+	}
 
 	.main-splash-left-btm p{ font-size:0.9em;	}
 	.main-splash-left-btm p:first-child{ font-size:1.2em; }
@@ -1693,7 +1710,13 @@ li.comment {
 		line-height: normal;
 	}
 
-	.pledges{ width:50%; height:300px;}
+	.pledges-sticky,
+	.pledges{
+		width:50%;
+		height:auto;
+		margin:10px auto;
+		padding:10px 0;
+	}
 
 	.main-splash-left-btm p{ font-size:0.8em;	}
 	.main-splash-left-btm p:first-child{ font-size:1em; }
@@ -1760,7 +1783,14 @@ li.comment {
 		font-size:1.2em;
 	}
 
-	.pledges{ width:100%; height:320px;}
+	.pledges-sticky,
+	.pledges{
+		width:100%;
+		height:auto;
+		margin:10px auto;
+		padding:10px 0;
+		font-size:1em;
+	}
 
 	.main-splash-left-btm p{ font-size:1em;	}
 	.main-splash-left-btm p:first-child{ font-size:1.5em; }
@@ -1780,7 +1810,14 @@ li.comment {
 		font-size:1.2em;
 	}
 
-	.pledges{ width:100%; }
+	.pledges,
+	.pledges{
+		width:100%;
+		height:auto;
+		margin:20px auto;
+		padding:10px 0;
+		font-size:1em;
+	}
 
 	.main-splash-left-btm p{ font-size:1em;	height:320px;}
 	.main-splash-left-btm p:first-child{ font-size:1.5em; }
