@@ -173,17 +173,29 @@ function page_loop(){
                             $pledge_slug = $post->post_name;
 
                             //wrap the pledge div with link
-                            echo '<a href="' . $pledge_slug . '"><div class="one-fourth pledges ' . $this_cats . '">';
+                            echo '
+                                <a href="' . $pledge_slug . '">
+                                    <div class="one-fourth pledges ' . $this_cats . '">
+                                        <div class="pledge-wrap">
 
-                            echo get_the_post_thumbnail( $post->ID, "thumbnail" );
-                            the_title('<figure class="pledge-title">', '</figure>', true);
-                            //echo '<a href="' . $pledge_slug . '">' . get_the_post_thumbnail( $post->ID, "thumbnail" ) . '</a>';
-                            //the_title('<a href="' . $pledge_slug .'"><figure class="pledge-title">', '</figure></a>', true);
+                                ';
 
-                            //echo apply_filters( 'the_content', get_the_content() );
-                            the_content();
+                                            echo get_the_post_thumbnail( $post->ID, "thumbnail" );
+                                            the_title('<figure class="pledge-title">', '</figure>', true);
+                                            //echo '<a href="' . $pledge_slug . '">' . get_the_post_thumbnail( $post->ID, "thumbnail" ) . '</a>';
+                                            //the_title('<a href="' . $pledge_slug .'"><figure class="pledge-title">', '</figure></a>', true);
 
-                            echo '</div></a>';
+                                            //echo apply_filters( 'the_content', get_the_content() );
+                                            the_content();
+
+                            echo '
+                                            <div class="view-share vsHide">
+                                                <img src="/wp-content/themes/itcanwaitnaz/images/view-share.png">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                                ';
 
                         }
                     }
@@ -195,6 +207,14 @@ function page_loop(){
     <?php
         wp_reset_query();
     
+}
+
+
+add_action('genesis_after_footer', 'add_scripts_to_btm');
+function add_scripts_to_btm() {
+    ?>
+        <script type="text/javascript" src="/wp-content/themes/itcanwaitnaz/js/scripts.js"></script>
+    <?php
 }
 
 

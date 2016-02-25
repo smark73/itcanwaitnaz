@@ -300,7 +300,6 @@ a.btn-pledge:hover{
 	font-weight:500;
 	color:#757575;
     border-bottom:1px solid #e4ecf0;
-
 }
 .pledges-sticky:hover,
 .pledges:hover{
@@ -310,6 +309,85 @@ a.btn-pledge:hover{
     -o-transition: background-color 100ms linear;
     -ms-transition: background-color 100ms linear;
     transition: background-color 100ms linear;
+}
+.pledge-wrap{
+	position:relative;
+	width:100%;
+	min-height:80px;
+	height:100%;
+	overflow: hidden;
+	display: block;
+}
+
+.view-share{
+	width:80px;
+	height:80px;
+	z-index: 1000;
+	position: absolute;
+	top:0;
+	left:0;
+}
+.view-share img{
+	width:80px;
+	height:80px;
+}
+.vsShow{
+    -webkit-animation: vsShowON 1s;
+    -moz-animation: vsShowON 1s;
+    -o-animation: vsShowON 1s;
+    animation: vsShowON 1s;
+    animation-iteration-count: 1;
+    animation-duration: 0.2s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+    transform: translate3d(0,0,0);
+    -webkit-transform: translate3d(0,0,0);
+    opacity:1;
+}
+.vsHide{
+    -webkit-animation: vsHideOFF 1s;
+    -moz-animation: vsHideOFF 1s;
+    -o-animation: vsHideOFF 1s;
+    animation: vsHideOFF 1s;
+    animation-iteration-count: 1;
+    animation-duration: 0.2s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+    transform: translate3d(0,0,0);
+    -webkit-transform: translate3d(0,0,0);
+    opacity:0;
+}
+@-webkit-keyframes vsShowON{
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+@-moz-keyframes vsShowON{
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+@-o-keyframes vsShowON{
+    0% { opacity: 0; }
+    100% { opacity: 1;  }
+}
+@keyframes vsShowON{
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+@-webkit-keyframes vsHideOFF{
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+@-moz-keyframes vsHideOFF{
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+@-o-keyframes vsHideOFF{
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+@keyframes vsHideOFF{
+    0% { opacity: 1; }
+    100% { opacity: 0; }
 }
 .pledge-title{
 	font-family: "omnes-pro",sans-serif;
@@ -324,8 +402,7 @@ a.btn-pledge:hover{
 	margin:4px;
 }
 
-.pledges-sticky img,
-.pledges img{
+.pledge-wrap img.wp-post-image{
 	width:150px;
 	height:150px;
 	margin:auto;
@@ -1584,6 +1661,7 @@ li.comment {
 		width:33%;
 	}
 	.pledges{
+		height:200px;
 		width:25%;
 	}
 	.main-splash-left-btm p{ font-size:1em;	}
@@ -1627,6 +1705,7 @@ li.comment {
 	}
 
 	.pledges{
+		height:200px;
 		width:25%;
 	}
 
@@ -1710,9 +1789,9 @@ li.comment {
 	.pledges-sticky,
 	.pledges{
 		width:50%;
+		min-height:80px;
 		height:auto;
-		margin:10px auto;
-		padding:10px 0;
+		margin:20px auto;
 	}
 
 	.main-splash-left-btm p{ font-size:0.8em;}
@@ -1783,9 +1862,9 @@ li.comment {
 	.pledges-sticky,
 	.pledges{
 		width:100%;
+		min-height:80px;
 		height:auto;
-		margin:10px auto;
-		padding:10px 0;
+		margin:20px auto;
 		font-size:1em;
 	}
 
@@ -1807,12 +1886,12 @@ li.comment {
 		font-size:1.2em;
 	}
 
-	.pledges,
+	.pledges-sticky,
 	.pledges{
 		width:100%;
+		min-height:80px;
 		height:auto;
 		margin:20px auto;
-		padding:10px 0;
 		font-size:1em;
 	}
 
