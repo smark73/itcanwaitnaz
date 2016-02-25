@@ -300,7 +300,7 @@ a.btn-pledge:hover{
 	font-weight:500;
 	color:#757575;
     border-bottom:1px solid #e4ecf0;
-    overflow: hidden;
+
 }
 .pledges-sticky:hover,
 .pledges:hover{
@@ -1582,11 +1582,9 @@ li.comment {
 
 	.pledges-sticky{
 		width:33%;
-		height:350px;
 	}
 	.pledges{
 		width:25%;
-		height:200px;
 	}
 	.main-splash-left-btm p{ font-size:1em;	}
 	.main-splash-left-btm p:first-child{ font-size:1.5em; }
@@ -1630,7 +1628,6 @@ li.comment {
 
 	.pledges{
 		width:25%;
-		height:200px;
 	}
 
 	.main-splash-left-btm p{ font-size:0.9em;	}
@@ -1718,7 +1715,7 @@ li.comment {
 		padding:10px 0;
 	}
 
-	.main-splash-left-btm p{ font-size:0.8em;	}
+	.main-splash-left-btm p{ font-size:0.8em;}
 	.main-splash-left-btm p:first-child{ font-size:1em; }
 
 }
@@ -1820,7 +1817,7 @@ li.comment {
 	}
 
 	.main-splash-left-btm p{ font-size:1em;	height:320px;}
-	.main-splash-left-btm p:first-child{ font-size:1.5em; }
+	.main-splash-left-btm p:first-child{ font-size:1.5em;}
 }
 
  /*MEDIA QUERY DEBUG ASSISTANCE*/
