@@ -142,7 +142,58 @@ function page_loop(){
                     }
                 ?>
 
+                <?php
+                    //SPECIAL (NOT STICKY) POSTS
+                    //special posts - we dont want the content, just the featured image and title
+                    $pledges = new WP_Query(array(
+                        'category_name' => 'special',
+                        'orderby' => 'rand',
+                        ));
+                    
+                    while ( $pledges->have_posts() ) {
 
+                        $pledges->the_post();
+                        global $post;
+
+                            
+                        // get categories to add as classes for sorting with isotope
+                        $post_cats = wp_get_post_categories( $post->ID );
+                        
+                        $this_cats = '';
+                        
+                        foreach( $post_cats as $c ){
+                            $cat = get_category( $c );
+                            $this_cats .= $cat->slug;
+                            $this_cats .= " ";
+                        }
+                        
+                        //slug for the link
+                        $pledge_slug = $post->post_name;
+
+                        //wrap the pledge div with link
+                        echo '
+                            <a href="' . $pledge_slug . '">
+                                <div class="one-fourth pledges ' . $this_cats . '">
+                                    <div class="pledge-wrap">
+
+                            ';
+
+                                        echo get_the_post_thumbnail( $post->ID, "thumbnail" );
+                                        the_title('<figure class="pledge-title">', '</figure>', true);
+
+
+                        echo '
+                                        <div class="view-share vsHide">
+                                            <img src="/wp-content/themes/itcanwaitnaz/images/view-share.png">
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            ';
+
+
+                    }
+                ?>
 
                 <?php
                     //NOT STICKY POSTS

@@ -117,7 +117,11 @@ function child_theme_setup(){
 	add_filter( 'genesis_post_info', 'sp_post_info_filter' );
 	function sp_post_info_filter($post_info) {
 	if ( !is_page() ) {
-		$post_info = 'Pledged on [post_date]';
+		if ( in_category('take-the-pledge-naz' ) ){
+			$post_info = 'Pledged on [post_date]';
+		} else {
+			$post_info = '';
+		}
 		return $post_info;
 	}}
 

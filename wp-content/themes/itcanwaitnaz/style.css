@@ -395,6 +395,7 @@ a.btn-pledge:hover{
 	margin:4px;
 }
 
+/* circle images */
 .pledge-wrap img.wp-post-image{
 	width:150px;
 	height:150px;
@@ -403,6 +404,17 @@ a.btn-pledge:hover{
 	border-radius:50%;
 	-webkit-border-radius:50%;
 	-moz-border-radius:50%;
+}
+
+/* non-circle "special" images */
+.special .pledge-wrap img.wp-post-image{
+	width:175px;
+	height:175px;
+	margin:auto;
+	text-align:center;
+	border-radius:0;
+	-webkit-border-radius:0;
+	-moz-border-radius:0;
 }
 
 
