@@ -99,14 +99,14 @@ function page_loop(){
 
                 <?php
                     // STICKY POSTS
-                    $pledges = new WP_Query(array(
+                    $sticky = new WP_Query(array(
                         'category_name' => 'celebrities,take-the-pledge-naz',
                         'orderby' => 'rand',
                         ));
                     
-                    while ( $pledges->have_posts() ) {
+                    while ( $sticky->have_posts() ) {
 
-                        $pledges->the_post();
+                        $sticky->the_post();
                         global $post;
 
                         if(is_sticky($post->ID)){
@@ -145,14 +145,14 @@ function page_loop(){
                 <?php
                     //SPECIAL (NOT STICKY) POSTS
                     //special posts - we dont want the content, just the featured image and title
-                    $pledges = new WP_Query(array(
+                    $special = new WP_Query(array(
                         'category_name' => 'special',
                         'orderby' => 'rand',
                         ));
                     
-                    while ( $pledges->have_posts() ) {
+                    while ( $special->have_posts() ) {
 
-                        $pledges->the_post();
+                        $special->the_post();
                         global $post;
 
                             
