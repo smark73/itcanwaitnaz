@@ -40,6 +40,10 @@ function cust_pg_hdr() {
                             echo '</div>';
                         }
                     }
+
+                    //reset for next loop
+                    wp_reset_query();
+
                     ?>
 
                     <div class="main-splash-left-btm">
@@ -75,6 +79,10 @@ function cust_pg_hdr() {
                             echo '</div>';
                         }
                     }
+
+                    //reset for next loop
+                    wp_reset_query();
+
                     ?>
                     <div class="main-splash-right-btm">
                         <a class="btn-pledge" href="/take-the-pledge">Take The Pledge</a>
@@ -104,7 +112,7 @@ function page_loop(){
                         'orderby' => 'rand',
                         ));
                     
-                    //DEBUG $stickycount = 0;
+                    $stickycount = 0;
 
                     while ( $sticky->have_posts() ) {
 
@@ -113,7 +121,7 @@ function page_loop(){
 
                         if(is_sticky($post->ID)){
 
-                            //DEBUG $stickycount += 1;
+                            $stickycount += 1;
                             
                             // get categories to add as classes for sorting with isotope
                             $post_cats = wp_get_post_categories( $post->ID );
@@ -157,14 +165,14 @@ function page_loop(){
                         'orderby' => 'rand',
                         ));
                     
-                    //DEBUG $specialcount = 0;
+                    $specialcount = 0;
 
                     while ( $special->have_posts() ) {
 
                         $special->the_post();
                         global $post;
 
-                        //DEBUG $specialcount += 1;
+                        $specialcount += 1;
                             
                         // get categories to add as classes for sorting with isotope
                         $post_cats = wp_get_post_categories( $post->ID );
@@ -216,7 +224,7 @@ function page_loop(){
                         'orderby' => 'rand',
                         ));
                     
-                    //DEBUG $pledgecount = 0;
+                    $pledgecount = 0;
 
                     while ( $pledges->have_posts() ) {
 
@@ -225,7 +233,7 @@ function page_loop(){
 
                         if(! is_sticky($post->ID)){
 
-                            //DEBUG $pledgecount += 1;
+                            $pledgecount += 1;
                             
                             // get categories to add as classes for sorting with isotope
                             $post_cats = wp_get_post_categories( $post->ID );
@@ -274,9 +282,11 @@ function page_loop(){
                 ?>
 
                 <?php
-                    //DEBUG echo "sticky:" . $stickycount . "<br/>";
-                    //DEBUG echo "special: " . $specialcount . "<br/>";
-                    //DEBUG echo "pledges: " . $pledgecount . "<br/>";
+                    echo "<div style='clear:both;visibility:hidden;display:none;height:0;'>";
+                    echo "sticky:" . $stickycount . "<br/>";
+                    echo "special: " . $specialcount . "<br/>";
+                    echo "pledges: " . $pledgecount . "<br/>";
+                    echo "</div>";
                 ?>
 
             </div>
