@@ -212,11 +212,14 @@ function page_loop(){
                         ));
                     
                     $pledgecount = 0;
+                    $pledgecount2 = 0;
 
                     while ( $pledges->have_posts() ) {
 
                         $pledges->the_post();
                         global $post;
+
+                        $pledgecount2 += 1;
 
                         if( ! in_category( 'spotlight' ) && ! in_category( 'special' ) ){
 
@@ -271,6 +274,7 @@ function page_loop(){
                     echo "spotlight:" . $spotlightcount . "<br/>";
                     echo "special: " . $specialcount . "<br/>";
                     echo "pledges: " . $pledgecount . "<br/>";
+                    echo "pledges2: " . $pledgecount2 . "<br/>";
                     echo "</div>";
                 ?>
 
