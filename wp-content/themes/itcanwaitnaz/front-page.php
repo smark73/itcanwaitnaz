@@ -106,14 +106,14 @@ function page_loop(){
                         'orderby' => 'rand',
                         ));
                     
-                    //DEBUG $spotlightcount = 0;
+                    $spotlightcount = 0;
 
                     while ( $spotlight->have_posts() ) {
 
                         $spotlight->the_post();
                         global $post;
 
-                            //DEBUG $spotlightcount += 1;
+                            $spotlightcount += 1;
                             
                             // get categories to add as classes for sorting with isotope
                             $post_cats = wp_get_post_categories( $post->ID );
@@ -154,14 +154,14 @@ function page_loop(){
                         'orderby' => 'rand',
                         ));
                     
-                    //DEBUG $specialcount = 0;
+                    $specialcount = 0;
 
                     while ( $special->have_posts() ) {
 
                         $special->the_post();
                         global $post;
 
-                        //DEBUG $specialcount += 1;
+                        $specialcount += 1;
                             
                         // get categories to add as classes for sorting with isotope
                         $post_cats = wp_get_post_categories( $post->ID );
@@ -211,7 +211,7 @@ function page_loop(){
                         'orderby' => 'rand',
                         ));
                     
-                    //DEBUG $pledgecount = 0;
+                    $pledgecount = 0;
 
                     while ( $pledges->have_posts() ) {
 
@@ -220,7 +220,7 @@ function page_loop(){
 
                         if( ! in_category( 'spotlight' ) && ! in_category( 'special' ) ){
 
-                            //DEBUG $pledgecount += 1;
+                            $pledgecount += 1;
                             
                             // get categories to add as classes for sorting with isotope
                             $post_cats = wp_get_post_categories( $post->ID );
@@ -267,11 +267,11 @@ function page_loop(){
                 ?>
 
                 <?php
-                    //DEBUG echo "<div style='clear:both;visibility:hidden;display:none;height:0;'>";
-                    //DEBUG echo "spotlight:" . $spotlightcount . "<br/>";
-                    //DEBUG echo "special: " . $specialcount . "<br/>";
-                    //DEBUG echo "pledges: " . $pledgecount . "<br/>";
-                    //DEBUG echo "</div>";
+                    echo "<div style='clear:both;visibility:hidden;display:none;height:0;'>";
+                    echo "spotlight:" . $spotlightcount . "<br/>";
+                    echo "special: " . $specialcount . "<br/>";
+                    echo "pledges: " . $pledgecount . "<br/>";
+                    echo "</div>";
                 ?>
 
             </div>
