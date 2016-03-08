@@ -119,7 +119,7 @@ function page_loop(){
                         $sticky->the_post();
                         global $post;
 
-                        if(is_sticky($post->ID)){
+                        if(is_sticky()){
 
                             $stickycount += 1;
                             
