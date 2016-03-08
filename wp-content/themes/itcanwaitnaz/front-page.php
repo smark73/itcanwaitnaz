@@ -41,9 +41,6 @@ function cust_pg_hdr() {
                         }
                     }
 
-                    //reset for next loop
-                    wp_reset_query();
-
                     ?>
 
                     <div class="main-splash-left-btm">
@@ -80,9 +77,6 @@ function cust_pg_hdr() {
                         }
                     }
 
-                    //reset for next loop
-                    wp_reset_query();
-
                     ?>
                     <div class="main-splash-right-btm">
                         <a class="btn-pledge" href="/take-the-pledge">Take The Pledge</a>
@@ -112,14 +106,14 @@ function page_loop(){
                         'orderby' => 'rand',
                         ));
                     
-                    $spotlightcount = 0;
+                    //DEBUG $spotlightcount = 0;
 
                     while ( $spotlight->have_posts() ) {
 
                         $spotlight->the_post();
                         global $post;
 
-                            $spotlightcount += 1;
+                            //DEBUG $spotlightcount += 1;
                             
                             // get categories to add as classes for sorting with isotope
                             $post_cats = wp_get_post_categories( $post->ID );
@@ -150,8 +144,6 @@ function page_loop(){
 
                         }
 
-                    //reset for next loop
-                    wp_reset_query();
                 ?>
 
                 <?php
@@ -162,14 +154,14 @@ function page_loop(){
                         'orderby' => 'rand',
                         ));
                     
-                    $specialcount = 0;
+                    //DEBUG $specialcount = 0;
 
                     while ( $special->have_posts() ) {
 
                         $special->the_post();
                         global $post;
 
-                        $specialcount += 1;
+                        //DEBUG $specialcount += 1;
                             
                         // get categories to add as classes for sorting with isotope
                         $post_cats = wp_get_post_categories( $post->ID );
@@ -209,8 +201,6 @@ function page_loop(){
 
                     }
 
-                    //reset for next loop
-                    wp_reset_query();
                 ?>
 
                 <?php
@@ -221,7 +211,7 @@ function page_loop(){
                         'orderby' => 'rand',
                         ));
                     
-                    $pledgecount = 0;
+                    //DEBUG $pledgecount = 0;
 
                     while ( $pledges->have_posts() ) {
 
@@ -230,7 +220,7 @@ function page_loop(){
 
                         if( ! in_category( 'spotlight' ) && ! in_category( 'special' ) ){
 
-                            $pledgecount += 1;
+                            //DEBUG $pledgecount += 1;
                             
                             // get categories to add as classes for sorting with isotope
                             $post_cats = wp_get_post_categories( $post->ID );
@@ -274,16 +264,14 @@ function page_loop(){
                         }
                     }
 
-                    //reset for next loop
-                    wp_reset_query();
                 ?>
 
                 <?php
-                    echo "<div style='clear:both;visibility:hidden;display:none;height:0;'>";
-                    echo "spotlight:" . $spotlightcount . "<br/>";
-                    echo "special: " . $specialcount . "<br/>";
-                    echo "pledges: " . $pledgecount . "<br/>";
-                    echo "</div>";
+                    //DEBUG echo "<div style='clear:both;visibility:hidden;display:none;height:0;'>";
+                    //DEBUG echo "spotlight:" . $spotlightcount . "<br/>";
+                    //DEBUG echo "special: " . $specialcount . "<br/>";
+                    //DEBUG echo "pledges: " . $pledgecount . "<br/>";
+                    //DEBUG echo "</div>";
                 ?>
 
             </div>
