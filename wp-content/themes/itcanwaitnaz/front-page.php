@@ -104,12 +104,16 @@ function page_loop(){
                         'orderby' => 'rand',
                         ));
                     
+                    //DEBUG $stickycount = 0;
+
                     while ( $sticky->have_posts() ) {
 
                         $sticky->the_post();
                         global $post;
 
                         if(is_sticky($post->ID)){
+
+                            //DEBUG $stickycount += 1;
                             
                             // get categories to add as classes for sorting with isotope
                             $post_cats = wp_get_post_categories( $post->ID );
@@ -140,6 +144,9 @@ function page_loop(){
 
                         }
                     }
+
+                    //reset for next loop
+                    wp_reset_query();
                 ?>
 
                 <?php
@@ -150,11 +157,14 @@ function page_loop(){
                         'orderby' => 'rand',
                         ));
                     
+                    //DEBUG $specialcount = 0;
+
                     while ( $special->have_posts() ) {
 
                         $special->the_post();
                         global $post;
 
+                        //DEBUG $specialcount += 1;
                             
                         // get categories to add as classes for sorting with isotope
                         $post_cats = wp_get_post_categories( $post->ID );
@@ -193,21 +203,29 @@ function page_loop(){
 
 
                     }
+
+                    //reset for next loop
+                    wp_reset_query();
                 ?>
 
                 <?php
                     //NOT STICKY POSTS
+                    // all pledges minus "sticky" and "special" ones
                     $pledges = new WP_Query(array(
                         'category_name' => 'celebrities,take-the-pledge-naz',
                         'orderby' => 'rand',
                         ));
                     
+                    //DEBUG $pledgecount = 0;
+
                     while ( $pledges->have_posts() ) {
 
                         $pledges->the_post();
                         global $post;
 
                         if(! is_sticky($post->ID)){
+
+                            //DEBUG $pledgecount += 1;
                             
                             // get categories to add as classes for sorting with isotope
                             $post_cats = wp_get_post_categories( $post->ID );
@@ -250,6 +268,15 @@ function page_loop(){
 
                         }
                     }
+
+                    //reset for next loop
+                    wp_reset_query();
+                ?>
+
+                <?php
+                    //DEBUG echo "sticky:" . $stickycount . "<br/>";
+                    //DEBUG echo "special: " . $specialcount . "<br/>";
+                    //DEBUG echo "pledges: " . $pledgecount . "<br/>";
                 ?>
 
             </div>
