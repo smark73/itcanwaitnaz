@@ -106,22 +106,20 @@ function page_loop(){
             <div class="pledge-grid-wrap">
 
                 <?php
-                    // STICKY POSTS
-                    $sticky = new WP_Query(array(
-                        'category_name' => 'celebrities,take-the-pledge-naz',
+                    // SPOTLIGHT POSTS
+                    $spotlight = new WP_Query(array(
+                        'category_name' => 'spotlight',
                         'orderby' => 'rand',
                         ));
                     
-                    $stickycount = 0;
+                    $spotlightcount = 0;
 
-                    while ( $sticky->have_posts() ) {
+                    while ( $spotlight->have_posts() ) {
 
-                        $sticky->the_post();
+                        $spotlight->the_post();
                         global $post;
 
-                        if(is_sticky()){
-
-                            $stickycount += 1;
+                            $spotlightcount += 1;
                             
                             // get categories to add as classes for sorting with isotope
                             $post_cats = wp_get_post_categories( $post->ID );
@@ -151,14 +149,13 @@ function page_loop(){
                             echo '</div></a>';
 
                         }
-                    }
 
                     //reset for next loop
                     wp_reset_query();
                 ?>
 
                 <?php
-                    //SPECIAL (NOT STICKY) POSTS
+                    //SPECIAL (NOT SPOTLIGHT) POSTS
                     //special posts - we dont want the content, just the featured image and title
                     $special = new WP_Query(array(
                         'category_name' => 'special',
@@ -217,8 +214,8 @@ function page_loop(){
                 ?>
 
                 <?php
-                    //NOT STICKY POSTS
-                    // all pledges minus "sticky" and "special" ones
+                    //NOT SPOTLIGHT POSTS
+                    // all pledges minus "spotlight" and "special" ones
                     $pledges = new WP_Query(array(
                         'category_name' => 'celebrities,take-the-pledge-naz',
                         'orderby' => 'rand',
@@ -231,7 +228,7 @@ function page_loop(){
                         $pledges->the_post();
                         global $post;
 
-                        if(! is_sticky($post->ID)){
+                        if( ! in_category( 'spotlight' ) && ! in_category( 'special' ) ){
 
                             $pledgecount += 1;
                             
@@ -283,7 +280,7 @@ function page_loop(){
 
                 <?php
                     echo "<div style='clear:both;visibility:hidden;display:none;height:0;'>";
-                    echo "sticky:" . $stickycount . "<br/>";
+                    echo "spotlight:" . $spotlightcount . "<br/>";
                     echo "special: " . $specialcount . "<br/>";
                     echo "pledges: " . $pledgecount . "<br/>";
                     echo "</div>";
