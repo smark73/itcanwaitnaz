@@ -209,6 +209,8 @@ function page_loop(){
                     $pledges = new WP_Query(array(
                         'category_name' => 'celebrities,take-the-pledge-naz',
                         'orderby' => 'rand',
+                        'posts_per_page' => -1,
+                        'nopaging' => true,
                         ));
                     
                     $pledgecount = 0;
