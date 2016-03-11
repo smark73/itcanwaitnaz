@@ -104,7 +104,7 @@ function page_loop(){
                     $spotlight = new WP_Query(array(
                         'category_name' => 'spotlight',
                         'orderby' => 'rand',
-                        ));
+                    ));
                     
                     //DEBUG $spotlightcount = 0;
 
@@ -152,7 +152,7 @@ function page_loop(){
                     $special = new WP_Query(array(
                         'category_name' => 'special',
                         'orderby' => 'rand',
-                        ));
+                    ));
                     
                     //DEBUG $specialcount = 0;
 
@@ -188,6 +188,63 @@ function page_loop(){
                                         echo get_the_post_thumbnail( $post->ID, "thumbnail" );
                                         the_title('<figure class="pledge-title">', '</figure>', true);
 
+
+                        echo '
+                                        <div class="view-share vsHide">
+                                            <img src="/wp-content/themes/itcanwaitnaz/images/view-share.png">
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            ';
+
+
+                    }
+
+                ?>
+
+                <?php
+                    //RADIO SPOTS
+                    
+                    $radiospots = new WP_Query(array(
+                        'category_name' => 'radio-spots',
+                        'orderby' => 'DESC'
+                    ));
+
+                    while ( $radiospots->have_posts() ) {
+
+                        $radiospots->the_post();
+                        global $post;
+
+                        // get categories to add as classes for sorting with isotope
+                        $post_cats = wp_get_post_categories( $post->ID );
+                        
+                        $this_cats = '';
+                        
+                        foreach( $post_cats as $c ){
+                            $cat = get_category( $c );
+                            $this_cats .= $cat->slug;
+                            $this_cats .= " ";
+                        }
+                        
+                        //slug for the link
+                        $pledge_slug = $post->post_name;
+
+                        //wrap the pledge div with link
+                        echo '
+                            <a href="' . $pledge_slug . '">
+                                <div class="one-fourth pledges ' . $this_cats . '">
+                                    <div class="pledge-wrap">
+
+                            ';
+
+                                        echo get_the_post_thumbnail( $post->ID, "thumbnail" );
+                                        the_title('<figure class="pledge-title">', '</figure>', true);
+                                        //echo '<a href="' . $pledge_slug . '">' . get_the_post_thumbnail( $post->ID, "thumbnail" ) . '</a>';
+                                        //the_title('<a href="' . $pledge_slug .'"><figure class="pledge-title">', '</figure></a>', true);
+
+                                        //echo apply_filters( 'the_content', get_the_content() );
+                                        the_content();
 
                         echo '
                                         <div class="view-share vsHide">
