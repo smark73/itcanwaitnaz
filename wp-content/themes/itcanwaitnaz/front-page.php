@@ -238,11 +238,15 @@ function page_loop(){
                             //slug for the link
                             $pledge_slug = $post->post_name;
 
+                            //generate random background color for each grid-item
+                            $rand_bg = rand(5,60)/100;
+
+
                             //wrap the pledge div with link
                             echo '
                                 <a href="' . $pledge_slug . '">
                                     <div class="one-fourth pledges ' . $this_cats . '">
-                                        <div class="pledge-wrap">
+                                        <div class="pledge-wrap" style="background-color:rgba(214,243,255,' . $rand_bg . ');">
 
                                 ';
 
