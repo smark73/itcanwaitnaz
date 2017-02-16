@@ -45,7 +45,7 @@ function cust_pg_hdr() {
 
                     <div class="main-splash-left-btm">
                         <p class="win-this-car">Take The Pledge and Win This Car!</p>
-                        <p>We're giving away this car and more!<br/>All you need to do is take the pledge!</p>
+                        <p>We're giving away this car and more SOON!<br/>All you need to do is take the pledge!</p>
                     </div>
                 </div>
             </div>
@@ -100,6 +100,12 @@ function page_loop(){
             <div class="pledge-grid-wrap">
 
                 <?php
+                    // SHOW TOTAL PLEDGES TO DATE
+                    $total_pledge_count = new WP_Query(array(
+                        'category_name' => 'take-the-pledge-naz',
+                    ));
+
+                    echo "<h2 style='font-style:italic;font-weight:600;color:#757575;'>" . $total_pledge_count->found_posts . " pledges to date!</h2>";
                     // SPOTLIGHT POSTS
                     $spotlight = new WP_Query(array(
                         'category_name' => 'spotlight',
