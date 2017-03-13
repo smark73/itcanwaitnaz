@@ -200,6 +200,11 @@ function child_theme_setup(){
 				$rsvp_email = (get_query_var('rsvpe')) ? get_query_var('rsvpe') : "unknown@itcanwaitnaz.com";
 				$rsvp_name = (get_query_var('rsvpn')) ? get_query_var('rsvpn') : "Pledger!";
 
+				// check for MailChimp merge tag not working correctly
+				if ( preg_match('/[\W]+/', $rsvp_name ) ) {
+				    $rsvp_name = "Pledger!";
+				}
+
 				echo '<h1 class="entry-title">Hello ' . $rsvp_name . '</h1>';
 			}
 		}
