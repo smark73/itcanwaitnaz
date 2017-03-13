@@ -134,8 +134,6 @@ function child_theme_setup(){
 		return $post_meta;
 	}}
 
-
-
 	// -------- END POSTS ----------------
 
 
@@ -176,9 +174,39 @@ function child_theme_setup(){
 
 
 
+	// --------  ADD CUSTOM QUERY VARS
+	function add_query_vars_filter($vars){
+	    $vars[] = 'rsvpe';
+	    $vars[] = 'rsvpn';
+	    return $vars;
+	}
+	add_filter('query_vars', 'add_query_vars_filter');
+	// ------ END -----------
+
+
+
+
+	// ------ RSVP CUSTOMIZATION
+	// customize RSVP page
+	function customize_rsvp_page() {
+		global $post;
+		if( $post->post_name === 'rsvp' ) {
+
+			//change post title to username
+			remove_action( 'genesis_entry_header', 'genesis_do_post_title' );
+			add_action( 'genesis_entry_header', 'rsvp_user_info_title' );
+			function rsvp_user_info_title(){
+				//load the user name or use empty default
+				$rsvp_email = (get_query_var('rsvpe')) ? get_query_var('rsvpe') : "unknown@itcanwaitnaz.com";
+				$rsvp_name = (get_query_var('rsvpn')) ? get_query_var('rsvpn') : "Pledger!";
+
+				echo '<h1 class="entry-title">Hello ' . $rsvp_name . '</h1>';
+			}
+		}
+	}
+	add_action( 'wp', 'customize_rsvp_page' );
+
+	// ----- END -------------
+
+
 }
-
-
-
-
-
