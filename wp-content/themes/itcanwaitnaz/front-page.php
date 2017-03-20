@@ -17,11 +17,17 @@ function cust_pg_hdr() {
             <div class="one-half first">
                 <div class="main-splash-left-wrap">
                     <?php
-                    $msplash_left_args = array(
-                        'post_type' => 'page',
-                        'pagename' => 'main-splash-left',
-                    );
-                    $msplash_left_query = new WP_Query( $msplash_left_args );
+                    //check for transient first
+                    if ( false === ( $msplash_left_query = get_transient( 'msplash_left_query' ) ) ) {
+                        $msplash_left_args = array(
+                            'post_type' => 'page',
+                            'pagename' => 'main-splash-left',
+                        );
+                        $msplash_left_query = new WP_Query( $msplash_left_args );
+                        //set transient for 1hr
+                        set_transient( 'msplash_left_query', $msplash_left_query, 60*60 );
+                    }
+                    //the loop
                     if( $msplash_left_query->have_posts() ){
                         while ( $msplash_left_query->have_posts() ) {
                             $msplash_left_query->the_post();
@@ -40,7 +46,6 @@ function cust_pg_hdr() {
                             echo '</div>';
                         }
                     }
-
                     ?>
 
                     <div class="main-splash-left-btm">
@@ -53,11 +58,18 @@ function cust_pg_hdr() {
             <div class="one-half">
                 <div class="main-splash-right-wrap">
                     <?php
-                    $msplash_right_args = array(
-                        'post_type' => 'page',
-                        'pagename' => 'main-splash-right',
-                    );
-                    $msplash_right_query = new WP_Query( $msplash_right_args );
+                    //check for transient first
+                    if ( false === ( $msplash_right_query = get_transient( 'msplash_right_query' ) ) ) {
+
+                        $msplash_right_args = array(
+                            'post_type' => 'page',
+                            'pagename' => 'main-splash-right',
+                        );
+                        $msplash_right_query = new WP_Query( $msplash_right_args );
+                        //set transient for 1hr
+                        set_transient( 'msplash_right_query', $msplash_right_query, 60*60 );
+                    }
+                    //the loop
                     if( $msplash_right_query->have_posts() ){
                         while ( $msplash_right_query->have_posts() ) {
                             $msplash_right_query->the_post();
@@ -76,7 +88,6 @@ function cust_pg_hdr() {
                             echo '</div>';
                         }
                     }
-
                     ?>
                     <div class="main-splash-right-btm">
                         <a class="btn-pledge" href="/take-the-pledge">Take The Pledge</a>
@@ -101,19 +112,29 @@ function page_loop(){
 
                 <?php
                     // SHOW TOTAL PLEDGES TO DATE
-                    $total_pledge_count = new WP_Query(array(
-                        'category_name' => 'take-the-pledge-naz',
-                    ));
-
+                    //check for transient first
+                    if ( false === ( $total_pledge_count = get_transient( 'total_pledge_count' ) ) ) {
+                        $total_pledge_count = new WP_Query(array(
+                            'category_name' => 'take-the-pledge-naz',
+                        ));
+                        //set transient for 10mins
+                        set_transient( 'total_pledge_count', $total_pledge_count, 600 );
+                    }
                     echo "<h2 style='font-style:italic;font-weight:600;color:#757575;'>" . $total_pledge_count->found_posts . " pledges to date!</h2>";
-                    // SPOTLIGHT POSTS
-                    $spotlight = new WP_Query(array(
-                        'category_name' => 'spotlight',
-                        'orderby' => 'rand',
-                    ));
                     
-                    //DEBUG $spotlightcount = 0;
+                    // SPOTLIGHT POSTS
+                    //check for transient first
+                    if ( false === ( $spotlight = get_transient( 'spotlight' ) ) ) {
+                        $spotlight = new WP_Query(array(
+                            'category_name' => 'spotlight',
+                            'orderby' => 'rand',
+                        ));
+                        //set transient for 1hr
+                        set_transient( 'spotlight', $spotlight, 60*60 );
+                    }
 
+                    //the loop
+                    //DEBUG $spotlightcount = 0;
                     while ( $spotlight->have_posts() ) {
 
                         $spotlight->the_post();
@@ -155,13 +176,18 @@ function page_loop(){
                 <?php
                     //SPECIAL (NOT SPOTLIGHT) POSTS
                     //special posts - we dont want the content, just the featured image and title
-                    $special = new WP_Query(array(
-                        'category_name' => 'special',
-                        'orderby' => 'rand',
-                    ));
+                    //check for transient first
+                    if ( false === ( $special = get_transient( 'special' ) ) ) {
+                        $special = new WP_Query(array(
+                            'category_name' => 'special',
+                            'orderby' => 'rand',
+                        ));
+                        //set transient for 1hr
+                        set_transient( 'special', $special, 60*60 );
+                    }
                     
+                    //the loop
                     //DEBUG $specialcount = 0;
-
                     while ( $special->have_posts() ) {
 
                         $special->the_post();
@@ -211,12 +237,17 @@ function page_loop(){
 
                 <?php
                     //RADIO SPOTS
-                    
-                    $radiospots = new WP_Query(array(
-                        'category_name' => 'radio-spots',
-                        'orderby' => 'DESC'
-                    ));
+                    //check for transient first
+                    if ( false === ( $radiospots = get_transient( 'radiospots' ) ) ) {
+                        $radiospots = new WP_Query(array(
+                            'category_name' => 'radio-spots',
+                            'orderby' => 'DESC'
+                        ));
+                        //set transient for 1hr
+                        set_transient( 'radiospots', $radiospots, 60*60 );
+                    }
 
+                    //the loop
                     while ( $radiospots->have_posts() ) {
 
                         $radiospots->the_post();
@@ -269,15 +300,20 @@ function page_loop(){
                 <?php
                     //NOT SPOTLIGHT POSTS
                     // all pledges minus "spotlight" and "special" ones
-                    $pledges = new WP_Query(array(
-                        'category_name' => 'celebrities,take-the-pledge-naz',
-                        'orderby' => 'rand',
-                        'posts_per_page' => -1,
-                        'nopaging' => true,
+                    //check for transient first
+                    if ( false === ( $pledges = get_transient( 'pledges' ) ) ) {
+                        $pledges = new WP_Query(array(
+                            'category_name' => 'celebrities,take-the-pledge-naz',
+                            'orderby' => 'rand',
+                            'posts_per_page' => -1,
+                            'nopaging' => true,
                         ));
+                        //set transient for 10min
+                        set_transient( 'pledges', $pledges, 600 );
+                    }
                     
+                    //the loop
                     //DEBUG $pledgecount = 0;
-
                     while ( $pledges->have_posts() ) {
 
                         $pledges->the_post();
