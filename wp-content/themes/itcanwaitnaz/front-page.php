@@ -17,35 +17,58 @@ function cust_pg_hdr() {
             <div class="one-half first">
                 <div class="main-splash-left-wrap">
                     <?php
+
+                    //PURGE
+                    //purge('msplash_left');
+
                     //check for transient first
-                    if ( false === ( $msplash_left_query = get_transient( 'msplash_left_query' ) ) ) {
+                    if ( false === ( $msplash_left = get_transient( 'msplash_left' ) ) ) {
                         $msplash_left_args = array(
                             'post_type' => 'page',
                             'pagename' => 'main-splash-left',
                         );
                         $msplash_left_query = new WP_Query( $msplash_left_args );
-                        //set transient for 1hr
-                        set_transient( 'msplash_left_query', $msplash_left_query, 60*60 );
-                    }
-                    //the loop
-                    if( $msplash_left_query->have_posts() ){
-                        while ( $msplash_left_query->have_posts() ) {
-                            $msplash_left_query->the_post();
-                            global $post;
+                    
+                        //the loop
+                        //init array to hold content in transient
+                        $msplash_left = array();
 
-                            //wp_get_attachment_image_src($attachment_id) returns an array with
-                            //[0] => url
-                            //[1] => width
-                            //[2] => height
-                            //[3] => boolean: true if $url is a resized image, false if it is the original or if no image is available.
-                            //$full_img = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full' );
-                            $the_img = wp_get_attachment_image_src( get_post_thumbnail_id(), 'large' );
-  
-                            echo '<div class="main-splash-left" style="background:url(' . $the_img[0] . ');background-size:contain;background-repeat:no-repeat;background-position:top center;">';
-                            the_content();
-                            echo '</div>';
+                        if( $msplash_left_query->have_posts() ){
+                            while ( $msplash_left_query->have_posts() ) {
+                                $msplash_left_query->the_post();
+                                global $post;
+
+                                //wp_get_attachment_image_src($attachment_id) returns an array with
+                                //[0] => url
+                                //[1] => width
+                                //[2] => height
+                                //[3] => boolean: true if $url is a resized image, false if it is the original or if no image is available.
+                                //$full_img = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full' );
+                                $the_img = wp_get_attachment_image_src( get_post_thumbnail_id(), 'large' );
+
+                                $msplash_left['the_img'] = $the_img[0];
+                                //ob_start();
+                                //the_content();
+                                //$msplash_left['the_content'] = ob_get_clean();
+                                $msplash_left['the_content'] = get_the_content();
+
+      
+                                //echo '<div class="main-splash-left" style="background:url(' . $the_img[0] . ');background-size:contain;background-repeat:no-repeat;background-position:top center;">';
+                                //the_content();
+                                //echo '</div>';
+                            }
                         }
+
+                        //set transient for 1hr
+                        set_transient( 'msplash_left', $msplash_left, 60*60 );
+
                     }
+
+                    echo '<div class="main-splash-left" style="background:url(' . $msplash_left['the_img'] . ');background-size:contain;background-repeat:no-repeat;background-position:top center;">';
+                    $msplash_left_the_content = apply_filters( 'the_content', $msplash_left['the_content'] );
+                    echo $msplash_left_the_content;
+                    echo '</div>';
+                    
                     ?>
 
                     <div class="main-splash-left-btm">
@@ -58,36 +81,53 @@ function cust_pg_hdr() {
             <div class="one-half">
                 <div class="main-splash-right-wrap">
                     <?php
+                    
+                    //PURGE
+                    //purge('msplash_right');
+
                     //check for transient first
-                    if ( false === ( $msplash_right_query = get_transient( 'msplash_right_query' ) ) ) {
+                    if ( false === ( $msplash_right = get_transient( 'msplash_right' ) ) ) {
 
                         $msplash_right_args = array(
                             'post_type' => 'page',
                             'pagename' => 'main-splash-right',
                         );
                         $msplash_right_query = new WP_Query( $msplash_right_args );
-                        //set transient for 1hr
-                        set_transient( 'msplash_right_query', $msplash_right_query, 60*60 );
-                    }
-                    //the loop
-                    if( $msplash_right_query->have_posts() ){
-                        while ( $msplash_right_query->have_posts() ) {
-                            $msplash_right_query->the_post();
-                            global $post;
+                    
+                        //the loop
+                        //init array to hold content in transient
+                        $msplash_right = array();
 
-                            //wp_get_attachment_image_src($attachment_id) returns an array with
-                            //[0] => url
-                            //[1] => width
-                            //[2] => height
-                            //[3] => boolean: true if $url is a resized image, false if it is the original or if no image is available.
-                            //$full_img = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full' );
-                            $the_img = wp_get_attachment_image_src( get_post_thumbnail_id(), 'large' );
-  
-                            echo '<div class="main-splash-right" style="background:url(' . $the_img[0] . ');background-size:cover;background-repeat:no-repeat;background-position:top center;">';
-                            the_content();
-                            echo '</div>';
+                        if( $msplash_right_query->have_posts() ){
+                            while ( $msplash_right_query->have_posts() ) {
+                                $msplash_right_query->the_post();
+                                global $post;
+
+                                //wp_get_attachment_image_src($attachment_id) returns an array with
+                                //[0] => url
+                                //[1] => width
+                                //[2] => height
+                                //[3] => boolean: true if $url is a resized image, false if it is the original or if no image is available.
+                                //$full_img = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full' );
+                                $the_img = wp_get_attachment_image_src( get_post_thumbnail_id(), 'large' );
+
+                                $msplash_right['the_img'] = $the_img[0];
+                                $msplash_right['the_content'] = get_the_content();
+
+                                //echo '<div class="main-splash-right" style="background:url(' . $the_img[0] . ');background-size:cover;background-repeat:no-repeat;background-position:top center;">';
+                                //the_content();
+                                //echo '</div>';
+                            }
                         }
+                        //set transient for 1hr
+                        set_transient( 'msplash_right', $msplash_right, 60*60 );
                     }
+
+                    echo '<div class="main-splash-right" style="background:url(' . $msplash_right['the_img'] . ');background-size:cover;background-repeat:no-repeat;background-position:top center;">';
+                    $msplash_right_the_content = apply_filters( 'the_content', $msplash_right['the_content'] );
+                    echo $msplash_right_the_content;
+                    echo '</div>';
+
                     ?>
                     <div class="main-splash-right-btm">
                         <a class="btn-pledge" href="/take-the-pledge">Take The Pledge</a>
@@ -112,16 +152,23 @@ function page_loop(){
 
                 <?php
                     // SHOW TOTAL PLEDGES TO DATE
+
+                    //PURGE
+                    //purge('pledge_count');
+
                     //check for transient first
-                    if ( false === ( $total_pledge_count = get_transient( 'total_pledge_count' ) ) ) {
+                    if ( false === ( $pledge_count = get_transient( 'pledge_count' ) ) ) {
                         $total_pledge_count = new WP_Query(array(
                             'category_name' => 'take-the-pledge-naz',
                         ));
+
+                        $pledge_count = $total_pledge_count->found_posts;
                         //set transient for 10mins
-                        set_transient( 'total_pledge_count', $total_pledge_count, 600 );
+                        set_transient( 'pledge_count', $pledge_count, 600 );
                     }
-                    echo "<h2 style='font-style:italic;font-weight:600;color:#757575;'>" . $total_pledge_count->found_posts . " pledges to date!</h2>";
+                    echo "<h2 style='font-style:italic;font-weight:600;color:#757575;'>" . $pledge_count . " pledges to date!</h2>";
                     
+
                     // SPOTLIGHT POSTS
                     //check for transient first
                     if ( false === ( $spotlight = get_transient( 'spotlight' ) ) ) {
