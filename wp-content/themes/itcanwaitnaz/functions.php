@@ -214,5 +214,45 @@ function child_theme_setup(){
 	// ----- END -------------
 
 
+	// Purge all the transients associated with our plugin.
+	function purge( $trans_name ) {
+
+	  global $wpdb;
+
+	  //$prefix = esc_sql( $this -> get_transient_prefix() );
+	  $prefix = $trans_name;
+
+	  $options = $wpdb -> options;
+
+	  $t  = esc_sql( "_transient_timeout_$prefix%" );
+
+	  $sql = $wpdb -> prepare (
+	    "
+	      SELECT option_name
+	      FROM $options
+	      WHERE option_name LIKE '%s'
+	    ",
+	    $t
+	  );
+
+	  $transients = $wpdb -> get_col( $sql );
+
+	  // For each transient...
+	  foreach( $transients as $transient ) {
+
+	    // Strip away the WordPress prefix in order to arrive at the transient key.
+	    $key = str_replace( '_transient_timeout_', '', $transient );
+
+	    // Now that we have the key, use WordPress core to the delete the transient.
+	    delete_transient( $key );
+
+	  }
+	  
+	  // But guess what?  Sometimes transients are not in the DB, so we have to do this too:
+	  wp_cache_flush();
+	  
+	}
+
+
 
 }

@@ -151,9 +151,8 @@ function page_loop(){
             <div class="pledge-grid-wrap">
 
                 <?php
-                    // SHOW TOTAL PLEDGES TO DATE
+                    //---- SHOW TOTAL PLEDGES TO DATE
 
-                    //PURGE
                     //purge('pledge_count');
 
                     //check for transient first
@@ -169,23 +168,26 @@ function page_loop(){
                     echo "<h2 style='font-style:italic;font-weight:600;color:#757575;'>" . $pledge_count . " pledges to date!</h2>";
                     
 
-                    // SPOTLIGHT POSTS
+                    //---- SPOTLIGHT POSTS
+
+                    //purge('spotlight_posts');
+
                     //check for transient first
-                    if ( false === ( $spotlight = get_transient( 'spotlight' ) ) ) {
+                    if ( false === ( $spotlight_posts = get_transient( 'spotlight_posts' ) ) ) {
                         $spotlight = new WP_Query(array(
                             'category_name' => 'spotlight',
                             'orderby' => 'rand',
                         ));
-                        //set transient for 1hr
-                        set_transient( 'spotlight', $spotlight, 60*60 );
-                    }
 
-                    //the loop
-                    //DEBUG $spotlightcount = 0;
-                    while ( $spotlight->have_posts() ) {
+                        //the loop
+                        //init array to hold content in transient
+                        $spotlight_posts = array();
 
-                        $spotlight->the_post();
-                        global $post;
+                        //DEBUG $spotlightcount = 0;
+                        while ( $spotlight->have_posts() ) {
+
+                            $spotlight->the_post();
+                            global $post;
 
                             //DEBUG $spotlightcount += 1;
                             
@@ -199,177 +201,66 @@ function page_loop(){
                                 $this_cats .= $cat->slug;
                                 $this_cats .= " ";
                             }
-                            
-                            //slug for the link
-                            $pledge_slug = $post->post_name;
 
-                            //wrap the pledge div with link
-                            echo '<a href="' . $pledge_slug . '"><div class="one-third pledges-sticky ' . $this_cats . '">';
-
-                            echo get_the_post_thumbnail( $post->ID, "thumbnail" );
-                            the_title('<figure class="pledge-title">', '</figure>', true);
-                            //echo '<a href="' . $pledge_slug . '">' . get_the_post_thumbnail( $post->ID, "thumbnail" ) . '</a>';
-                            //the_title('<a href="' . $pledge_slug .'"><figure class="pledge-title">', '</figure></a>', true);
-
-                            //echo apply_filters( 'the_content', get_the_content() );
-                            the_content();
-
-                            echo '</div></a>';
+                            $post_id = $post->ID;
+                            $spotlight_posts[$post_id]['slug'] = $post->post_name;
+                            $spotlight_posts[$post_id]['cats'] = $this_cats;
+                            $spotlight_posts[$post_id]['thumb'] = get_the_post_thumbnail( "thumbnail" );
+                            $spotlight_posts[$post_id]['title'] = get_the_title();
+                            $spotlight_posts[$post_id]['content'] = get_the_content();
 
                         }
+
+                        //set transient for 1hr
+                        set_transient( 'spotlight_posts', $spotlight_posts, 60*60 );
+
+                    }
+
+                    //display them
+                    foreach( $spotlight_posts as $key => $spotlight_post ){
+
+                        $pledge_slug = $spotlight_post['slug'];
+                        $this_cats = $spotlight_post['cats'];
+                        $this_thumb = $spotlight_post['thumb'];
+                        $this_title = $spotlight_post['title'];
+                        $this_content = $spotlight_post['content'];
+
+                        //wrap the pledge div with link
+                        echo '<a href="' . $pledge_slug . '"><div class="one-third pledges-sticky ' . $this_cats . '">';
+                        echo $this_thumb;
+                        echo '<figure class="pledge-title">' . $this_title . '</figure>';
+                        echo apply_filters( 'the_content', $this_content );
+                        echo '</div></a>';
+
+                    }
 
                 ?>
 
                 <?php
-                    //SPECIAL (NOT SPOTLIGHT) POSTS
+                    //---- SPECIAL (NOT SPOTLIGHT) POSTS
+
+                    //purge('special_posts');
+
                     //special posts - we dont want the content, just the featured image and title
                     //check for transient first
-                    if ( false === ( $special = get_transient( 'special' ) ) ) {
+                    if ( false === ( $special_posts = get_transient( 'special_posts' ) ) ) {
                         $special = new WP_Query(array(
                             'category_name' => 'special',
                             'orderby' => 'rand',
                         ));
-                        //set transient for 1hr
-                        set_transient( 'special', $special, 60*60 );
-                    }
                     
-                    //the loop
-                    //DEBUG $specialcount = 0;
-                    while ( $special->have_posts() ) {
+                        //the loop
+                        //init array to hold content in transient
+                        $special_posts = array();
 
-                        $special->the_post();
-                        global $post;
+                        //DEBUG $specialcount = 0;
+                        while ( $special->have_posts() ) {
 
-                        //DEBUG $specialcount += 1;
-                            
-                        // get categories to add as classes for sorting with isotope
-                        $post_cats = wp_get_post_categories( $post->ID );
-                        
-                        $this_cats = '';
-                        
-                        foreach( $post_cats as $c ){
-                            $cat = get_category( $c );
-                            $this_cats .= $cat->slug;
-                            $this_cats .= " ";
-                        }
-                        
-                        //slug for the link
-                        $pledge_slug = $post->post_name;
+                            $special->the_post();
+                            global $post;
 
-                        //wrap the pledge div with link
-                        echo '
-                            <a href="' . $pledge_slug . '">
-                                <div class="one-fourth pledges ' . $this_cats . '">
-                                    <div class="pledge-wrap">
-
-                            ';
-
-                                        echo get_the_post_thumbnail( $post->ID, "thumbnail" );
-                                        the_title('<figure class="pledge-title">', '</figure>', true);
-
-
-                        echo '
-                                        <div class="view-share vsHide">
-                                            <img src="/wp-content/themes/itcanwaitnaz/images/view-share.png">
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                            ';
-
-
-                    }
-
-                ?>
-
-                <?php
-                    //RADIO SPOTS
-                    //check for transient first
-                    if ( false === ( $radiospots = get_transient( 'radiospots' ) ) ) {
-                        $radiospots = new WP_Query(array(
-                            'category_name' => 'radio-spots',
-                            'orderby' => 'DESC'
-                        ));
-                        //set transient for 1hr
-                        set_transient( 'radiospots', $radiospots, 60*60 );
-                    }
-
-                    //the loop
-                    while ( $radiospots->have_posts() ) {
-
-                        $radiospots->the_post();
-                        global $post;
-
-                        // get categories to add as classes for sorting with isotope
-                        $post_cats = wp_get_post_categories( $post->ID );
-                        
-                        $this_cats = '';
-                        
-                        foreach( $post_cats as $c ){
-                            $cat = get_category( $c );
-                            $this_cats .= $cat->slug;
-                            $this_cats .= " ";
-                        }
-                        
-                        //slug for the link
-                        $pledge_slug = $post->post_name;
-
-                        //wrap the pledge div with link
-                        echo '
-                            <a href="' . $pledge_slug . '">
-                                <div class="one-fourth pledges ' . $this_cats . '">
-                                    <div class="pledge-wrap">
-
-                            ';
-
-                                        echo get_the_post_thumbnail( $post->ID, "thumbnail" );
-                                        the_title('<figure class="pledge-title">', '</figure>', true);
-                                        //echo '<a href="' . $pledge_slug . '">' . get_the_post_thumbnail( $post->ID, "thumbnail" ) . '</a>';
-                                        //the_title('<a href="' . $pledge_slug .'"><figure class="pledge-title">', '</figure></a>', true);
-
-                                        //echo apply_filters( 'the_content', get_the_content() );
-                                        the_content();
-
-                        echo '
-                                        <div class="view-share vsHide">
-                                            <img src="/wp-content/themes/itcanwaitnaz/images/view-share.png">
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                            ';
-
-
-                    }
-
-                ?>
-
-                <?php
-                    //NOT SPOTLIGHT POSTS
-                    // all pledges minus "spotlight" and "special" ones
-                    //check for transient first
-                    if ( false === ( $pledges = get_transient( 'pledges' ) ) ) {
-                        $pledges = new WP_Query(array(
-                            'category_name' => 'celebrities,take-the-pledge-naz',
-                            'orderby' => 'rand',
-                            'posts_per_page' => -1,
-                            'nopaging' => true,
-                        ));
-                        //set transient for 10min
-                        set_transient( 'pledges', $pledges, 600 );
-                    }
-                    
-                    //the loop
-                    //DEBUG $pledgecount = 0;
-                    while ( $pledges->have_posts() ) {
-
-                        $pledges->the_post();
-                        global $post;
-
-                        if( ! in_category( 'spotlight' ) && ! in_category( 'special' ) ){
-
-                            //DEBUG $pledgecount += 1;
-                            
+                            //DEBUG $specialcount += 1;
+                                
                             // get categories to add as classes for sorting with isotope
                             $post_cats = wp_get_post_categories( $post->ID );
                             
@@ -380,40 +271,210 @@ function page_loop(){
                                 $this_cats .= $cat->slug;
                                 $this_cats .= " ";
                             }
-                            
-                            //slug for the link
-                            $pledge_slug = $post->post_name;
 
-                            //generate random background color for each grid-item
-                            $rand_bg = rand(5,60)/100;
-
-
-                            //wrap the pledge div with link
-                            echo '
-                                <a href="' . $pledge_slug . '">
-                                    <div class="one-fourth pledges ' . $this_cats . '">
-                                        <div class="pledge-wrap" style="background-color:rgba(214,243,255,' . $rand_bg . ');">
-
-                                ';
-
-                                            echo get_the_post_thumbnail( $post->ID, "thumbnail" );
-                                            the_title('<figure class="pledge-title">', '</figure>', true);
-                                            //echo '<a href="' . $pledge_slug . '">' . get_the_post_thumbnail( $post->ID, "thumbnail" ) . '</a>';
-                                            //the_title('<a href="' . $pledge_slug .'"><figure class="pledge-title">', '</figure></a>', true);
-
-                                            //echo apply_filters( 'the_content', get_the_content() );
-                                            the_content();
-
-                            echo '
-                                            <div class="view-share vsHide">
-                                                <img src="/wp-content/themes/itcanwaitnaz/images/view-share.png">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                                ';
+                            $post_id = $post->ID;
+                            $special_posts[$post_id]['slug'] = $post->post_name;
+                            $special_posts[$post_id]['cats'] = $this_cats;
+                            $special_posts[$post_id]['thumb'] = get_the_post_thumbnail( $post->ID, "thumbnail" );
+                            $special_posts[$post_id]['title'] = get_the_title();
 
                         }
+
+                        //set transient for 1hr
+                        set_transient( 'special_posts', $special_posts, 60*60 );
+
+                    }
+
+                    //display them
+                    foreach ($special_posts as $key => $special_post) {
+                        
+                        $pledge_slug = $special_post['slug'];
+                        $this_cats = $special_post['cats'];
+                        $this_thumb = $special_post['thumb'];
+                        $this_title = $special_post['title'];
+
+                        //wrap the pledge div with link
+                        echo '
+                            <a href="' . $pledge_slug . '">
+                                <div class="one-fourth pledges ' . $this_cats . '">
+                                    <div class="pledge-wrap">
+                            ';
+                                        echo $this_thumb;
+                                        echo '<figure class="pledge-title">' . $this_title . '</figure>';
+                        echo '
+                                        <div class="view-share vsHide">
+                                            <img src="/wp-content/themes/itcanwaitnaz/images/view-share.png">
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            ';
+                    }
+
+                ?>
+
+                <?php
+                    //---- RADIO SPOTS
+
+                    //purge('radiospots_posts');
+
+                    //check for transient first
+                    if ( false === ( $radiospots_posts = get_transient( 'radiospots_posts' ) ) ) {
+                        $radiospots = new WP_Query(array(
+                            'category_name' => 'radio-spots',
+                            'orderby' => 'DESC'
+                        ));
+
+                        //the loop
+                        //init array to hold content in transient
+                        $radiospots_posts = array();
+
+                        while ( $radiospots->have_posts() ) {
+
+                            $radiospots->the_post();
+                            global $post;
+
+                            // get categories to add as classes for sorting with isotope
+                            $post_cats = wp_get_post_categories( $post->ID );
+                            
+                            $this_cats = '';
+                            
+                            foreach( $post_cats as $c ){
+                                $cat = get_category( $c );
+                                $this_cats .= $cat->slug;
+                                $this_cats .= " ";
+                            }
+
+                            $post_id = $post->ID;
+                            $radiospots_posts[$post_id]['slug'] = $post->post_name;
+                            $radiospots_posts[$post_id]['cats'] = $this_cats;
+                            $radiospots_posts[$post_id]['thumb'] = get_the_post_thumbnail( $post_id, "thumbnail" );
+                            $radiospots_posts[$post_id]['title'] = get_the_title();
+                            $radiospots_posts[$post_id]['content'] = get_the_content();
+
+                        }
+
+                        //set transient for 1hr
+                        set_transient( 'radiospots', $radiospots_posts, 60*60 );
+
+                    }
+
+                    // display them
+                    foreach ($radiospots_posts as $key => $radiospots_post) {
+
+                        $pledge_slug = $radiospots_post['slug'];
+                        $this_cats = $radiospots_post['cats'];
+                        $this_thumb = $radiospots_post['thumb'];
+                        $this_title = $radiospots_post['title'];
+                        $this_content = $radiospots_post['content'];
+
+                        //wrap the pledge div with link
+                        echo '
+                            <a href="' . $pledge_slug . '">
+                                <div class="one-fourth pledges ' . $this_cats . '">
+                                    <div class="pledge-wrap">
+                            ';
+                                        echo $this_thumb;
+                                        echo '<figure class="pledge-title">' . $this_title . '</figure>';
+                                        echo apply_filters( 'the_content', $this_content );
+                        echo '
+                                        <div class="view-share vsHide">
+                                            <img src="/wp-content/themes/itcanwaitnaz/images/view-share.png">
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            ';
+                    }
+
+                ?>
+
+                <?php
+                    //---- NOT SPOTLIGHT POSTS
+
+                    //purge('pledge_posts');
+
+                    // all pledges minus "spotlight" and "special" ones
+                    //check for transient first
+                    if ( false === ( $pledge_posts = get_transient( 'pledge_posts' ) ) ) {
+                        $pledges = new WP_Query(array(
+                            'category_name' => 'celebrities,take-the-pledge-naz',
+                            'orderby' => 'rand',
+                            'posts_per_page' => -1,
+                            'nopaging' => true,
+                        ));
+
+                        //the loop
+                        //init array to hold content in transient
+                        $pledge_posts = array();
+
+                        //DEBUG $pledgecount = 0;
+                        while ( $pledges->have_posts() ) {
+
+                            $pledges->the_post();
+                            global $post;
+
+                            if( ! in_category( 'spotlight' ) && ! in_category( 'special' ) ){
+
+                                //DEBUG $pledgecount += 1;
+                                
+                                // get categories to add as classes for sorting with isotope
+                                $post_cats = wp_get_post_categories( $post->ID );
+                                
+                                $this_cats = '';
+                                
+                                foreach( $post_cats as $c ){
+                                    $cat = get_category( $c );
+                                    $this_cats .= $cat->slug;
+                                    $this_cats .= " ";
+                                }
+
+                                //generate random background color for each grid-item
+                                $rand_bg = rand(5,60)/100;
+
+                                $post_id = $post->ID;
+                                $pledge_posts[$post_id]['bg'] = $rand_bg;
+                                $pledge_posts[$post_id]['slug'] = $post->post_name;
+                                $pledge_posts[$post_id]['cats'] = $this_cats;
+                                $pledge_posts[$post_id]['thumb'] = get_the_post_thumbnail( $post_id, "thumbnail" );
+                                $pledge_posts[$post_id]['title'] = get_the_title();
+                                $pledge_posts[$post_id]['content'] = get_the_content();
+
+                            }
+                        }
+
+                        //set transient for 10min
+                        set_transient( 'pledge_posts', $pledge_posts, 600 );
+
+                    }
+
+                    // display them
+                    foreach ($pledge_posts as $key => $pledge_post) {
+
+                        $rand_bg = $pledge_post['bg'];
+                        $pledge_slug = $pledge_post['slug'];
+                        $this_cats = $pledge_post['cats'];
+                        $this_thumb = $pledge_post['thumb'];
+                        $this_title = $pledge_post['title'];
+                        $this_content = $pledge_post['content'];
+
+                        //wrap the pledge div with link
+                        echo '
+                            <a href="' . $pledge_slug . '">
+                                <div class="one-fourth pledges ' . $this_cats . '">
+                                    <div class="pledge-wrap" style="background-color:rgba(214,243,255,' . $rand_bg . ');">
+                            ';
+                                        echo $this_thumb;
+                                        echo '<figure class="pledge-title">' . $this_title . '</figure>';
+                                        echo apply_filters( 'the_content', $this_content );
+                        echo '
+                                        <div class="view-share vsHide">
+                                            <img src="/wp-content/themes/itcanwaitnaz/images/view-share.png">
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            ';
                     }
 
                 ?>
