@@ -72,8 +72,8 @@ function cust_pg_hdr() {
                     ?>
 
                     <div class="main-splash-left-btm">
-                        <p class="win-this-car">Take The Pledge and Win This Car!</p>
-                        <p>We're giving away this car and more SOON!<br/>All you need to do is take the pledge!</p>
+                        <p class="win-this-car">Thank You For Taking The Pledge!</p>
+                        <p>Distracted Driving is Never OK!<br/></p>
                     </div>
                 </div>
             </div>
