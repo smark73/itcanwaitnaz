@@ -496,10 +496,10 @@ function page_loop(){
 }
 
 
-add_action('genesis_after_footer', 'add_scripts_to_btm');
+//add_action('genesis_after_footer', 'add_scripts_to_btm');
 function add_scripts_to_btm() {
     ?>
-        <script type="text/javascript" src="/wp-content/themes/itcanwaitnaz/js/scripts.js"></script>
+        <script type="text/javascript" src="/wp-content/themes/itcanwaitnaz/js/scripts.min.js"></script>
     <?php
 }
 

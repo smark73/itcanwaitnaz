@@ -61,13 +61,17 @@ function child_theme_setup(){
 
 
 
-	// ---------- ENQUE STYLES and SCRIPTS -------------------
-    //add_action( 'genesis_meta', 'add_reqs_to_head' );
-    function add_reqs_to_head() {
+	// ---------- ENQUEUE STYLES and SCRIPTS -------------------
+    function icw_enqueue() {
         //wp_register_script('isotope', '//cdnjs.cloudflare.com/ajax/libs/jquery.isotope/2.2.0/isotope.pkgd.min.js');
         //wp_enqueue_script('isotope', '//cdnjs.cloudflare.com/ajax/libs/jquery.isotope/2.2.0/isotope.pkgd.min.js', true);
+        wp_register_script( 'icwnaz-scripts', get_stylesheet_directory_uri() . '/js/scripts.min.js' );
+        wp_enqueue_script( 'icwnaz-scripts', get_stylesheet_directory_uri() . '/js/scripts.min.js', array('jquery'), CHILD_THEME_VERSION, true );
+        wp_register_style( 'icwnaz-styles', get_stylesheet_directory_uri() . '/styles/style.min.css', array(), CHILD_THEME_VERSION );
+        wp_enqueue_style( 'icwnaz-styles' );
     }
-	// --------- END ENQUE STYLES and SCRIPTS -------------------
+    add_action( 'wp_enqueue_scripts', 'icw_enqueue' );
+	// --------- END -------------------
 
 
 
