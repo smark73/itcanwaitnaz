@@ -1,6 +1,5 @@
 // Require our dependencies
 var autoprefixer = require('autoprefixer');
-var browserSync = require('browser-sync');
 var cheerio = require('gulp-cheerio');
 var concat = require('gulp-concat');
 var cssnano = require('gulp-cssnano');
@@ -11,7 +10,6 @@ var mqpacker = require('css-mqpacker');
 var notify = require('gulp-notify');
 var plumber = require('gulp-plumber');
 var postcss = require('gulp-postcss');
-var reload = browserSync.reload;
 var rename = require('gulp-rename');
 var sass = require('gulp-sass');
 var sassLint = require('gulp-sass-lint');
@@ -21,7 +19,7 @@ var uglify = require('gulp-uglify');
 
 // Set assets paths.
 var paths = {
-	css: ['./styles/*.css', !'./styles/*.min.css'],
+	css: ['./styles/*.css', '!./styles/*.min.css'],
 	php: ['./*.php', './**/*.php'],
 	sass: './styles/**/*.scss',
 	concat_scripts: 'js/concat/*.js',
@@ -50,7 +48,7 @@ function handleErrors () {
  * Delete style.css and style.min.css before we minify and optimize
  */
 gulp.task('clean:styles', function() {
-	return del(['styles/style.css', 'styles/style.min.css']);
+	return del(['./styles/style.css', './styles/style.min.css']);
 });
 
 /**
@@ -80,7 +78,7 @@ gulp.task('postcss', ['clean:styles'], function() {
 		// Parse with PostCSS plugins.
 		.pipe(postcss([
 			autoprefixer({
-				browsers: ['last 2 version']
+				browsers: ['last 2 versions']
 			}),
 			mqpacker({
 				sort: true
@@ -91,8 +89,7 @@ gulp.task('postcss', ['clean:styles'], function() {
 	.pipe(sourcemaps.write())
 
 	// Create style.css.
-	.pipe(gulp.dest('./styles/'))
-	.pipe(browserSync.stream());
+	.pipe(gulp.dest('./styles/'));
 });
 
 /**
@@ -107,8 +104,7 @@ gulp.task('cssnano', ['postcss'], function() {
 		safe: true // Use safe optimizations
 	}))
 	.pipe(rename('style.min.css'))
-	.pipe(gulp.dest('./styles/'))
-	.pipe(browserSync.stream());
+	.pipe(gulp.dest('./styles/'));
 });
 
 /**
@@ -118,7 +114,7 @@ gulp.task('cssnano', ['postcss'], function() {
  */
 gulp.task('sass:lint', ['cssnano'], function() {
 	gulp.src([
-		'styles/**/*.scss'
+		'./styles/**/*.scss'
 	])
 	.pipe(sassLint())
 	.pipe(sassLint.format())
@@ -144,8 +140,7 @@ gulp.task('concat', ['clean:scripts'], function() {
 	.pipe(sourcemaps.init())
 	.pipe(concat('script.js'))
 	.pipe(sourcemaps.write())
-	.pipe(gulp.dest('js'))
-	.pipe(browserSync.stream());
+	.pipe(gulp.dest('js'));
 });
 
  /**
@@ -164,21 +159,10 @@ gulp.task('uglify', ['concat'], function() {
 
 
 /**
- * Process tasks and reload browsers on file changes.
+ * Process tasks on file changes.
  *
- * https://www.npmjs.com/package/browser-sync
  */
 gulp.task('watch', function() {
-
-	// Kick off BrowserSync.
-	browserSync({
-		open: false,                  // Open project in a new tab?
-		injectChanges: true,          // Auto inject changes instead of full reload
-		proxy: "itcanwaitnaz.vag",  // Use http://genesis-sample.dev:3000 to use BrowserSync
-		watchOptions: {
-			debounceDelay: 1000       // Wait 1 second before injecting
-		}
-	});
 
 	// Run tasks when files change.
 	gulp.watch(paths.sass, ['styles']);
