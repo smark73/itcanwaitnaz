@@ -151,23 +151,6 @@ function page_loop(){
             <div class="pledge-grid-wrap">
 
                 <?php
-                    //---- SHOW TOTAL PLEDGES TO DATE
-
-                    //purge('pledge_count');
-
-                    //check for transient first
-                    if ( false === ( $pledge_count = get_transient( 'pledge_count' ) ) ) {
-                        $total_pledge_count = new WP_Query(array(
-                            'category_name' => 'take-the-pledge-naz',
-                        ));
-
-                        $pledge_count = $total_pledge_count->found_posts;
-                        //set transient for 10mins
-                        set_transient( 'pledge_count', $pledge_count, 600 );
-                    }
-                    echo "<h2 style='font-style:italic;font-weight:600;color:#757575;'>" . $pledge_count . " pledges to date!</h2>";
-                    
-
                     //---- SPOTLIGHT POSTS
 
                     //purge('spotlight_posts');
@@ -390,16 +373,45 @@ function page_loop(){
                 ?>
 
                 <?php
-                    //---- NOT SPOTLIGHT POSTS
+
+                    //---- SHOW TOTAL PLEDGES TO DATE
+
+                    //purge('pledge_count');
+
+                    //check for transient first
+                    if ( false === ( $pledge_count = get_transient( 'pledge_count' ) ) ) {
+                        $total_pledge_count = new WP_Query(array(
+                            'category_name' => 'take-the-pledge-naz',
+                        ));
+
+                        $pledge_count = $total_pledge_count->found_posts;
+                        //set transient for 10mins
+                        set_transient( 'pledge_count', $pledge_count, 600 );
+                    }
+                    echo '
+                        <div style="clear:both;width:100%;border: 1px solid red;">
+                            <h2 style="font-style:italic;font-weight:600;color:#757575;">' . $pledge_count . ' pledges to date!</h2>
+                        </div>
+                        ';
+
+
+                    //---- ALL OTHER PLEDGES/POSTS
 
                     //purge('pledge_posts');
 
+                    if( !empty( $_GET['psort']) ) {
+                        $pledge_sort = $_GET['psort'];
+                    } else {
+                        $pledge_sort = 'date';
+                    }
+
                     // all pledges minus "spotlight" and "special" ones
                     //check for transient first
-                    if ( false === ( $pledge_posts = get_transient( 'pledge_posts' ) ) ) {
+                    //if ( false === ( $pledge_posts = get_transient( 'pledge_posts' ) ) ) {
                         $pledges = new WP_Query(array(
                             'category_name' => 'celebrities,take-the-pledge-naz',
-                            'orderby' => 'rand',
+                            //'orderby' => 'rand',
+                            'orderby' => $pledge_sort,
                             'posts_per_page' => -1,
                             'nopaging' => true,
                         ));
@@ -439,14 +451,15 @@ function page_loop(){
                                 $pledge_posts[$post_id]['thumb'] = get_the_post_thumbnail( $post_id, "thumbnail" );
                                 $pledge_posts[$post_id]['title'] = get_the_title();
                                 $pledge_posts[$post_id]['content'] = get_the_content();
+                                $pledge_posts[$post_id]['date'] = get_the_date();
 
                             }
                         }
 
                         //set transient for 10min
-                        set_transient( 'pledge_posts', $pledge_posts, 600 );
+                        //set_transient( 'pledge_posts', $pledge_posts, 600 );
 
-                    }
+                    //}
 
                     // display them
                     foreach ($pledge_posts as $key => $pledge_post) {
@@ -457,6 +470,7 @@ function page_loop(){
                         $this_thumb = $pledge_post['thumb'];
                         $this_title = $pledge_post['title'];
                         $this_content = $pledge_post['content'];
+                        $this_date = $pledge_post['date'];
 
                         //wrap the pledge div with link
                         echo '
@@ -466,6 +480,7 @@ function page_loop(){
                             ';
                                         echo $this_thumb;
                                         echo '<figure class="pledge-title">' . $this_title . '</figure>';
+                                        echo '<strong>' . $this_date . '</strong>';
                                         echo apply_filters( 'the_content', $this_content );
                         echo '
                                         <div class="view-share vsHide">
