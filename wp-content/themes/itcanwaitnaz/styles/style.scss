@@ -204,6 +204,7 @@ input[type="search"] {
 	color:#fff;
 	font-family: "omnes-pro",sans-serif;
 	text-shadow:1px 1px 1px rgba(0,0,0,0.2);
+	padding-top: 20px;
 }
 
 .main-splash-right-btm{
@@ -299,6 +300,11 @@ a.btn-pledge:hover{
 	padding: 3px;
 	font-size: 1.1em;
 }
+
+.zaadii-home {
+	background: #d6f3ff;
+}
+
 
 .view-share{
 	width:80px;
@@ -403,6 +409,75 @@ a.btn-pledge:hover{
 	-webkit-border-radius:0;
 	-moz-border-radius:0;
 }
+
+.pledge-count-sort {
+
+	.pledge-count-wrap {
+
+		.pledge-count {
+			font-family: Lato, sans-serif;
+			font-style: italic;
+			font-weight: 600;
+			font-size: 30px;
+			color: #757575;
+		}
+		
+		text-align: right;
+		padding-right: 10px;
+		display: inline-block;
+
+		@media only screen and (max-width: 880px) {
+			text-align: center;
+		}
+	}
+
+	.pledge-sort-wrap {
+
+		.pledge-sort-filter {
+			display: inline-block;
+			padding: 7px;
+			font-size: 14px;
+			max-width: 170px;
+			border: 0;
+			background-color: #f1f1f1;
+			color: #666;
+			cursor: pointer;
+		}
+
+		form.sortpledges {
+
+			input[type="submit"] {
+				background-color: #e7e7e7;
+				color: #999;
+				font-family: "omnes-pro",sans-serif;
+				font-weight: 600;
+				font-size: 0.8em;
+				padding: 7px 12px;
+
+			}
+
+			span.sortby {
+				font-size: 14px;
+				color: #666;
+			}
+
+			text-align: right;
+			background-color: #f1f1f1;
+			max-width: 70%;
+			margin:auto;
+
+		}
+
+		text-align: left;
+		min-width: 400px;
+		display: inline-block;
+
+		@media only screen and (max-width: 880px) {
+			text-align: center;
+		}
+	}
+}
+
 
 
 

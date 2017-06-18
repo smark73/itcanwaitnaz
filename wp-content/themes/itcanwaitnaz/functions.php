@@ -172,6 +172,21 @@ function child_theme_setup(){
         }
         return $liveOrLocal;
     }
+
+    function filter_pledger_categories(){
+        // Category ID's for reference:
+        //   local dev: uncat=1, celeb=3, take-the-pledge=4, special=6, spotlight=8, radio=9,
+        //   live prod: uncat=1, celeb=2, take-the-pledge=3, special=7, spotlight=9, radio=10,
+        // we don't want the following cats in the pledger section:  special, spotlight, radio
+        if( live_or_local() === 'local' ){
+            //$cat_ids_to_hide = array(6,8,9);
+            $cat_ids = array( 3,4,-6,-8,-9 );
+        } else {
+            //$cat_ids_to_hide = array(7,9,10);
+            $cat_ids = array( 2,3,-7,-9,-10 );
+        }
+        return $cat_ids;
+    }
     //-------- END GLOBAL FUNCTIONS --------------
 
 
@@ -182,6 +197,7 @@ function child_theme_setup(){
 	function add_query_vars_filter($vars){
 	    $vars[] = 'rsvpe';
 	    $vars[] = 'rsvpn';
+	    $vars[] = 'pledge_sort';
 	    return $vars;
 	}
 	add_filter('query_vars', 'add_query_vars_filter');
@@ -256,6 +272,190 @@ function child_theme_setup(){
 	  wp_cache_flush();
 	  
 	}
+
+
+
+	// ------ LOAD MORE ON SCROLL
+    // Notes for me:
+    // This line doesn't work for us (not sure why):  $args = isset($_POST['query']...
+    // this adds a new WP Query to the bottom of an existing group of posts in a page where you want more to show 
+    // upon scrolling down.  The new query is a separate query and needs to have same params as original.
+    // It doesn't work with random sorting, as each new query is a "new" query, not a continuation of the first.
+    // It works as a new query getting the next page of posts in a specific order.
+
+    /**
+     * AJAX Load More 
+     * @link http://www.billerickson.net/infinite-scroll-in-wordpress
+     */
+    function be_ajax_load_more() {
+        global $wp_query;
+        global $post;
+        //doesnt work??
+        $args = isset( $_POST['query'] ) ? array_map( 'esc_attr', $_POST['query'] ) : array();
+
+        //var_dump($_POST);
+
+        //if( $args['scrollload'] == 1 ) {
+
+            // get the cats wanted to show/hide for pledger section
+            $cats = filter_pledger_categories();
+
+            //$args['post_type'] = isset( $args['post_type'] ) ? esc_attr( $args['post_type'] ) : 'post';
+            $args['post_type'] = 'post';
+            $args['cat'] = $cats;
+            $args['paged'] = esc_attr( $_POST['page'] );
+            $args['post_status'] = 'publish';
+            //$args['orderby'] = 'rand';
+            $args['posts_per_page'] = 50;
+
+            ob_start();
+            $pledges = new WP_Query( $args );
+            //echo $pledges->request;
+            if( $pledges->have_posts() ): while( $pledges->have_posts() ): $pledges->the_post();
+                display_pledges();
+            endwhile; endif; wp_reset_postdata();
+            $data = ob_get_clean();
+
+            wp_send_json_success( $data );
+            wp_die();
+
+        //}
+    }
+    add_action( 'wp_ajax_be_ajax_load_more', 'be_ajax_load_more' );
+    add_action( 'wp_ajax_nopriv_be_ajax_load_more', 'be_ajax_load_more' );
+
+    /**
+     * Javascript for Load More
+     */
+    function be_load_more_js() {
+        global $post;
+        global $wp_query;
+
+        //doesnt work??
+        //$args = isset( $_POST['query'] ) ? array_map( 'esc_attr', $_POST['query'] ) : array();
+
+        if( is_home() || is_front_page() ) {
+
+            $args = array(
+                'url'   => admin_url( 'admin-ajax.php' ),
+                'query' => $wp_query->query,
+                'scrollload' => 1,
+            );
+
+            //$args = isset( $args['query'] ) ? array_map( 'esc_attr', $args['query'] ) : array();
+            //$args['post_type'] = isset( $args['post_type'] ) ? esc_attr( $args['post_type'] ) : 'post';
+            //var_dump( $args );
+
+            wp_enqueue_script( 'be-load-more', get_stylesheet_directory_uri() . '/js/load-more.js', array( 'jquery' ), '1.0', true );
+            wp_localize_script( 'be-load-more', 'beloadmore', $args );
+        }
+    }
+    add_action( 'wp_enqueue_scripts', 'be_load_more_js' );
+
+    // ------ END LOAD MORE ON SCROLL
+
+
+
+    // ------ SORT
+    function icw_ajax_sort() {
+        global $wp_query;
+        global $post;
+        //doesnt work??
+        $args = isset( $_POST['query'] ) ? array_map( 'esc_attr', $_POST['query'] ) : array();
+
+        //var_dump($_POST);
+
+        //if( $args['scrollload'] == 1 ) {
+
+            // get the cats wanted to show/hide for pledger section
+            $cats = filter_pledger_categories();
+
+            //$args['post_type'] = isset( $args['post_type'] ) ? esc_attr( $args['post_type'] ) : 'post';
+            $args['post_type'] = 'post';
+            $args['cat'] = $cats;
+            $args['paged'] = esc_attr( $_POST['page'] );
+            $args['post_status'] = 'publish';
+            //$args['orderby'] = 'rand';
+            $args['posts_per_page'] = 50;
+
+            ob_start();
+            $pledges = new WP_Query( $args );
+            //echo $pledges->request;
+            if( $pledges->have_posts() ): while( $pledges->have_posts() ): $pledges->the_post();
+                display_pledges();
+            endwhile; endif; wp_reset_postdata();
+            $data = ob_get_clean();
+
+            wp_send_json_success( $data );
+            wp_die();
+
+        //}
+    }
+    add_action( 'wp_ajax_icw_ajax_sort', 'icw_ajax_sort' );
+    add_action( 'wp_ajax_nopriv_icw_ajax_sort', 'icw_ajax_sort' );
+
+    /**
+     * Javascript for Sort
+     */
+    function icw_load_on_sort() {
+        global $post;
+        global $wp_query;
+
+        //doesnt work??
+        $args = isset( $_POST['query'] ) ? array_map( 'esc_attr', $_POST['query'] ) : array();
+
+        if( is_home() || is_front_page() ) {
+
+            $args = array(
+                'url'   => admin_url( 'admin-ajax.php' ),
+                'query' => $wp_query->query,
+                'scrollload' => 1,
+            );
+
+            //$args = isset( $args['query'] ) ? array_map( 'esc_attr', $args['query'] ) : array();
+            //$args['post_type'] = isset( $args['post_type'] ) ? esc_attr( $args['post_type'] ) : 'post';
+            //var_dump( $args );
+
+            wp_enqueue_script( 'icw-load-on-sort', get_stylesheet_directory_uri() . '/js/pledge-sort.js', array( 'jquery' ), '1.0', true );
+            wp_localize_script( 'icw-load-on-sort', 'icwloadonsort', $args );
+        }
+    }
+    add_action( 'wp_enqueue_scripts', 'icw_load_on_sort' );
+    // ------ END SORT
+
+
+    // --- DISPLAY USED IN SCROLL & SORT
+    function display_pledges() {
+        global $post;
+
+        //generate random background color for each grid-item
+        $rand_bg = rand(5,60)/100;
+
+        $post_id = $post->ID;
+
+        echo '
+            <a href="' . $post->post_name . '">
+                <div class="one-fourth pledges take-the-pledge-naz">
+                    <div class="pledge-wrap" style="background-color:rgba(214,243,255,' . $rand_bg . ');">
+            ';
+                        //echo get_the_post_thumbnail( $post_id, "thumbnail" );
+                        the_post_thumbnail( $post_id, "thumbnail" );
+                        //echo $this_thumb;
+                        //echo '<figure class="pledge-title">' . $this_title . '</figure>';
+                        the_title('<figure class="pledge-title">', '</figure>');
+                        //echo apply_filters( 'the_content', $this_content );
+                        the_content();
+        echo '
+                        <div class="view-share vsHide">
+                            <img src="/wp-content/themes/itcanwaitnaz/images/view-share.png">
+                        </div>
+                    </div>
+                </div>
+            </a>
+            ';
+
+    }
+    // ------
 
 
 
