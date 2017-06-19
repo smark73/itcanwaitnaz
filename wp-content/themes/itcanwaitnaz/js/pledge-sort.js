@@ -1,5 +1,4 @@
-jQuery(document).ready(function($){
-
+jQuery(function($){
 	$('#sortpledges').submit(function(e){
 		var data = {
 			action: 'icw_ajax_sort',

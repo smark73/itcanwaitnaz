@@ -321,8 +321,8 @@ function child_theme_setup(){
 
         //}
     }
-    add_action( 'wp_ajax_be_ajax_load_more', 'be_ajax_load_more' );
-    add_action( 'wp_ajax_nopriv_be_ajax_load_more', 'be_ajax_load_more' );
+    //add_action( 'wp_ajax_be_ajax_load_more', 'be_ajax_load_more' );
+    //add_action( 'wp_ajax_nopriv_be_ajax_load_more', 'be_ajax_load_more' );
 
     /**
      * Javascript for Load More
@@ -350,7 +350,7 @@ function child_theme_setup(){
             wp_localize_script( 'be-load-more', 'beloadmore', $args );
         }
     }
-    add_action( 'wp_enqueue_scripts', 'be_load_more_js' );
+    //add_action( 'wp_enqueue_scripts', 'be_load_more_js' );
 
     // ------ END LOAD MORE ON SCROLL
 
@@ -391,8 +391,8 @@ function child_theme_setup(){
 
         //}
     }
-    add_action( 'wp_ajax_icw_ajax_sort', 'icw_ajax_sort' );
-    add_action( 'wp_ajax_nopriv_icw_ajax_sort', 'icw_ajax_sort' );
+    //add_action( 'wp_ajax_icw_ajax_sort', 'icw_ajax_sort' );
+    //add_action( 'wp_ajax_nopriv_icw_ajax_sort', 'icw_ajax_sort' );
 
     /**
      * Javascript for Sort
@@ -420,7 +420,7 @@ function child_theme_setup(){
             wp_localize_script( 'icw-load-on-sort', 'icwloadonsort', $args );
         }
     }
-    add_action( 'wp_enqueue_scripts', 'icw_load_on_sort' );
+    //add_action( 'wp_enqueue_scripts', 'icw_load_on_sort' );
     // ------ END SORT
 
 
@@ -457,6 +457,83 @@ function child_theme_setup(){
     }
     // ------
 
+    function pledge_filter_function(){
 
+        $args = isset( $_POST['query'] ) ? array_map( 'esc_attr', $_POST['query'] ) : array();
+
+        $args['posts_per_page'] = -1;
+        $args['nopaging'] = true;
+        $args['cat'] = filter_pledger_categories();
+        $args['post_type'] = 'post';
+
+        // add query vars for sorting
+        $pledge_sort = '';
+        $pledge_sort = isset( $_POST['pledge_sort'] ) ? esc_attr( $_POST['pledge_sort'] ) : 'rand';
+
+        switch( $pledge_sort ) {
+            case 'rand':
+                $args['orderby'] = 'date';
+                $args['order']   = 'rand';
+                break;
+                
+            case 'pledge_date':
+                $args['orderby'] = 'date';
+                $args['order']   = 'DESC';
+                break;
+                
+            case 'pledge_date_rev':
+                $args['orderby'] = 'date';
+                $args['order']   = 'ASC';
+                break;
+                
+            case 'pledge_title':
+                $args['orderby'] = 'title';
+                $args['order']   = 'ASC';
+                break;
+                
+            case 'pledge_title_rev':
+                $args['orderby'] = 'title';
+                $args['order']   = 'DESC';
+                break;
+
+            default:
+                $args['orderby'] = 'rand';
+                break;
+        }
+
+        //print_r($args);
+     
+        $query = new WP_Query( $args );
+     
+        if( $query->have_posts() ) :
+            while( $query->have_posts() ): $query->the_post();
+                display_pledges();
+            endwhile;
+            wp_reset_postdata();
+        else :
+            echo 'No posts found';
+        endif;
+     
+        die();
+    }
+    add_action('wp_ajax_sortFilter', 'pledge_filter_function'); 
+    add_action('wp_ajax_nopriv_sortFilter', 'pledge_filter_function');
+
+    /**
+     * Javascript for Sort
+     */
+    function icw_load_on_sort_script() {
+        global $post;
+        global $wp_query;
+
+        if( is_home() || is_front_page() ) {
+
+            $args = isset( $_POST['query'] ) ? array_map( 'esc_attr', $_POST['query'] ) : array();
+
+            wp_enqueue_script( 'icw-load-on-sort-script', get_stylesheet_directory_uri() . '/js/pledge-sort-filter.js', array( 'jquery' ), '1.0', true );
+            wp_localize_script( 'icw-load-on-sort-script', 'icwloadonsortscript', $args );
+        }
+    }
+    add_action( 'wp_enqueue_scripts', 'icw_load_on_sort_script' );
 
 }
