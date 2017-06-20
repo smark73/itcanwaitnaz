@@ -147,10 +147,16 @@ input[type="search"] {
 }
 
 .icw-hdr{
-	width:85%;
+	width:100%;
 	margin:0 auto;
 	padding:0;
-	background:#07569b;
+	//background-color: #0581bf; //07569b;
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#0680bf+0,07569b+91 */
+	background: #0680bf; /* Old browsers */
+	background: -moz-linear-gradient(top,  #0680bf 0%, #07569b 91%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top,  #0680bf 0%,#07569b 91%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom,  #0680bf 0%,#07569b 91%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0680bf', endColorstr='#07569b',GradientType=0 ); /* IE6-9 */
 }
 
 .main-splash-left-wrap{
@@ -168,6 +174,11 @@ input[type="search"] {
 }
 
 .main-splash-left{
+
+	.metaslider {
+		max-width: 600px;
+	}
+
 	/*see media queries for height*/
 	min-width:100%;
 	text-align:center;
@@ -180,20 +191,24 @@ input[type="search"] {
 
 .main-splash-right{
 	/*see media queries for height*/
-	min-width:100%;
-	text-align:center;
-	margin:0 auto;
-	padding:0;
+	min-width: 100%;
+	text-align: center;
+	margin: 0 auto;
+	padding: 0;
 	font-family: "omnes-pro",sans-serif;
-	font-weight:500;
+	font-weight: 500;
 	font-style: italic;
-	font-size:1.4em;
-	color:#fff;
+	font-size: 1.4em;
+	color: #fff;
 	/*border fixes display bug*/
-	border:1px solid #07569b;
+	//border: 1px solid #07569b;
 	/*content dependant settings (some in media queries) */
-	padding-top:220px;
-	text-shadow:1px 1px 1px rgba(0,0,0,0.2);
+	padding-top: 220px;
+	text-shadow: 1px 1px 1px rgba(0,0,0,0.2);
+	background-image: url('../images/keep-your-eyes-on-the-road.jpg');
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: top center;
 }
 
 .main-splash-left-btm{
@@ -261,6 +276,13 @@ a.btn-pledge:hover{
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d4edf4', endColorstr='#ffffff',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 
+.spot-spec-radio {
+	background-image: url('../images/icw-car-drive-bg.jpg');
+	background-position: top center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
 /* FRONT PAGE PLEDGES */
 
 .pledge-grid-wrap{
@@ -281,15 +303,29 @@ a.btn-pledge:hover{
 	color:#757575;
     border-bottom:1px solid #e4ecf0;
 }
-.pledges-sticky:hover,
+.radio-spots,
+.pledges-sticky{
+    border-bottom:0;
+}
+
 .pledges:hover{
-	background-color:#d6f3ff;
+	background-color: #d6f3ff;
 	-webkit-transition: background-color 100ms linear;
     -moz-transition: background-color 100ms linear;
     -o-transition: background-color 100ms linear;
     -ms-transition: background-color 100ms linear;
     transition: background-color 100ms linear;
 }
+.radio-spots:hover,
+.pledges-sticky:hover {
+	background-color: rgba(7,86,155,.5);
+	-webkit-transition: background-color 100ms linear;
+    -moz-transition: background-color 100ms linear;
+    -o-transition: background-color 100ms linear;
+    -ms-transition: background-color 100ms linear;
+    transition: background-color 100ms linear;
+}
+
 .pledge-wrap{
 	position:relative;
 	width:100%;
@@ -300,11 +336,6 @@ a.btn-pledge:hover{
 	padding: 3px;
 	font-size: 1.1em;
 }
-
-.zaadii-home {
-	background: #d6f3ff;
-}
-
 
 .view-share{
 	width:80px;
@@ -376,6 +407,18 @@ a.btn-pledge:hover{
     0% { opacity: 1; }
     100% { opacity: 0; }
 }
+
+.pledges-sticky,
+.radio-spots {
+	.pledge-title{
+		color: #d6f3ff;
+		text-shadow: 1px 1px 1px rgba(0,0,0,.25);
+	}
+	color: #fff;
+}
+
+.zaadii-home {}
+
 .pledge-title{
 	font-family: "omnes-pro",sans-serif;
 	color:#379bcd;
@@ -383,6 +426,7 @@ a.btn-pledge:hover{
 	margin:0 auto;
 	padding:5px 0 0 0;
 }
+
 .pledges-sticky p,
 .pledges p{
 	margin:4px;
@@ -476,6 +520,8 @@ a.btn-pledge:hover{
 			text-align: center;
 		}
 	}
+
+	margin-top: 30px;
 }
 
 
@@ -833,12 +879,16 @@ th {
 .site-inner,
 .wrap {
 	margin: 0 auto;
-	max-width: 1200px;
+	//max-width: 1200px;
 }
 
 .site-inner {
 	clear: both;
 	padding-top: 40px;
+}
+
+.home .site-inner {
+	padding-top: 0;
 }
 
 /* ## Column Widths and Positions
@@ -1708,6 +1758,7 @@ li.comment {
 	line-height: 1;
 	padding: 40px 0;
 	text-align: center;
+	font-weight: 500;
 }
 
 .site-footer p {
@@ -1748,12 +1799,26 @@ li.comment {
 	.main-splash-left-btm p:nth-child(2){
 		font-size:0.9em;
 	}
+
+	.icw-hdr .one-half{
+		width: 50%;
+	}
+
+	.home .site-inner,
+	.home .wrap {
+		max-width: 100%;
+	}
 }
 @media only screen and (max-width: 1200px) {
 
 	.site-inner,
 	.wrap {
 		max-width: 960px;
+	}
+
+	.home .site-inner,
+	.home .wrap {
+		max-width: 100%;
 	}
 
 	.content-sidebar-sidebar .content-sidebar-wrap,
@@ -1790,6 +1855,11 @@ li.comment {
 		height:200px;
 		width:25%;
 	}
+
+	.icw-hdr .one-half{
+		width: 50%;
+	}
+
 	.main-splash-left,
 	.main-splash-right{
 		height:350px;
@@ -1815,6 +1885,11 @@ li.comment {
 	.site-inner,
 	.wrap {
 		max-width: 800px;
+	}
+
+	.site-inner,
+	.wrap {
+		max-width: 100%;
 	}
 
 	.content,
@@ -1920,6 +1995,12 @@ li.comment {
 		padding-right: 5%;
 	}
 
+	.site-inner,
+	.wrap {
+		padding: 0;
+	}
+
+
 	.archive-description,
 	.author-box,
 	.comment-respond,
@@ -1947,6 +2028,10 @@ li.comment {
 	.two-sixths,
 	.two-thirds {
 		margin: 0;
+		width: 100%;
+	}
+
+	.icw-hdr .one-half{
 		width: 100%;
 	}
 

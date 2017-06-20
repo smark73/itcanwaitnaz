@@ -13,7 +13,7 @@ add_action( 'genesis_after_header', 'cust_pg_hdr' );
 function cust_pg_hdr() {
 
     ?>
-        <div class="icw-hdr">
+        <div class="icw-hdr full-width-content">
 
             <div class="one-half first">
                 <div class="main-splash-left-wrap">
@@ -81,60 +81,20 @@ function cust_pg_hdr() {
 
             <div class="one-half">
                 <div class="main-splash-right-wrap">
-                    <?php
-                    
-                    //PURGE
-                    //purge('msplash_right');
-
-                    //check for transient first
-                    if ( false === ( $msplash_right = get_transient( 'msplash_right' ) ) ) {
-
-                        $msplash_right_args = array(
-                            'post_type' => 'page',
-                            'pagename' => 'main-splash-right',
-                        );
-                        $msplash_right_query = new WP_Query( $msplash_right_args );
-                    
-                        //the loop
-                        //init array to hold content in transient
-                        $msplash_right = array();
-
-                        if( $msplash_right_query->have_posts() ){
-                            while ( $msplash_right_query->have_posts() ) {
-                                $msplash_right_query->the_post();
-                                global $post;
-
-                                //wp_get_attachment_image_src($attachment_id) returns an array with
-                                //[0] => url
-                                //[1] => width
-                                //[2] => height
-                                //[3] => boolean: true if $url is a resized image, false if it is the original or if no image is available.
-                                //$full_img = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full' );
-                                $the_img = wp_get_attachment_image_src( get_post_thumbnail_id(), 'large' );
-
-                                $msplash_right['the_img'] = $the_img[0];
-                                $msplash_right['the_content'] = get_the_content();
-
-                                //echo '<div class="main-splash-right" style="background:url(' . $the_img[0] . ');background-size:cover;background-repeat:no-repeat;background-position:top center;">';
-                                //the_content();
-                                //echo '</div>';
-                            }
-                        }
-                        //set transient for 1hr
-                        set_transient( 'msplash_right', $msplash_right, 60*60 );
-                    }
-
-                    echo '<div class="main-splash-right" style="background:url(' . $msplash_right['the_img'] . ');background-size:cover;background-repeat:no-repeat;background-position:top center;">';
-                    $msplash_right_the_content = apply_filters( 'the_content', $msplash_right['the_content'] );
-                    echo $msplash_right_the_content;
-                    echo '</div>';
-
-                    ?>
+                    <div class="main-splash-right">
+                        <p style="text-align: center;">
+                            Keep your eyes on the road,<br>
+                            not on your phone.<br>
+                            #ItCanWaitNAZ
+                        </p>
+                    </div>
                     <div class="main-splash-right-btm">
                         <a class="btn-pledge" href="/take-the-pledge">Take The Pledge</a>
                     </div>
                 </div>
             </div>
+
+            <div class="clearfix"></div>
 
         </div>
 
@@ -150,6 +110,8 @@ add_action( 'genesis_loop', 'page_loop' );
 function page_loop(){
     ?>
             <div class="pledge-grid-wrap">
+
+                <div class="spot-spec-radio">
 
                 <?php
                     //---- SPOTLIGHT & SPECIAL POSTS (top row)
@@ -389,6 +351,9 @@ function page_loop(){
 
                 ?>
 
+                <div class="clearfix"></div>
+                </div><!-- spot-spec-radio -->
+
                 <?php
 
                     // **** SUBMITTED PLEDGES *****
@@ -439,26 +404,27 @@ function page_loop(){
                         'cat' => $args_cats,
                         'posts_per_page' => -1,
                         'nopaging' => true,
+                        'orderby' => 'rand',
                     );
 
                     // all pledges minus "spotlight" and "special" ones
                     //check for transient first
-                    //if ( false === ( $pledge_posts = get_transient( 'pledge_posts' ) ) ) {
+                    if( false === ( $pledge_posts = get_transient( 'pledge_posts' ) ) ) {
+                        $pledge_posts = new WP_Query( $args );
+                        //set transient for 10min
+                        set_transient( 'pledge_posts', $pledge_posts, 600 );
+                    }
 
-                        $pledges = new WP_Query( $args );
-
-                        //the loop
+                    //display them
+                    if( $pledge_posts->have_posts() ) {
                         //DEBUG $pledgecount = 0;
-                        while ( $pledges->have_posts() ) {
-                            $pledges->the_post();
+                        while ( $pledge_posts->have_posts() ) {
+                            $pledge_posts->the_post();
                             global $post;
                             display_pledges();
                         }
+                    }
 
-                        //set transient for 10min
-                        //set_transient( 'pledge_posts', $pledge_posts, 600 );
-
-                    //}
 
                 ?>
 
