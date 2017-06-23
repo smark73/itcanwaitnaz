@@ -439,7 +439,7 @@ function child_theme_setup(){
                     <div class="pledge-wrap" style="background-color:rgba(214,243,255,' . $rand_bg . ');">
             ';
                         //echo get_the_post_thumbnail( $post_id, "thumbnail" );
-                        the_post_thumbnail( $post_id, "thumbnail" );
+                        the_post_thumbnail( "thumbnail" );
                         //echo $this_thumb;
                         //echo '<figure class="pledge-title">' . $this_title . '</figure>';
                         the_title('<figure class="pledge-title">', '</figure>');

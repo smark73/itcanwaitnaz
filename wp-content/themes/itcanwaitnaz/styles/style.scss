@@ -151,12 +151,12 @@ input[type="search"] {
 	margin:0 auto;
 	padding:0;
 	//background-color: #0581bf; //07569b;
-	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#0680bf+0,07569b+91 */
-	background: #0680bf; /* Old browsers */
-	background: -moz-linear-gradient(top,  #0680bf 0%, #07569b 91%); /* FF3.6-15 */
-	background: -webkit-linear-gradient(top,  #0680bf 0%,#07569b 91%); /* Chrome10-25,Safari5.1-6 */
-	background: linear-gradient(to bottom,  #0680bf 0%,#07569b 91%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0680bf', endColorstr='#07569b',GradientType=0 ); /* IE6-9 */
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#257dd3+0,1074d1+100 */
+	background: #257dd3; /* Old browsers */
+	background: -moz-linear-gradient(-45deg,  #257dd3 0%, #1074d1 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(-45deg,  #257dd3 0%,#1074d1 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(135deg,  #257dd3 0%,#1074d1 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#257dd3', endColorstr='#1074d1',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 
 .main-splash-left-wrap{
@@ -164,7 +164,13 @@ input[type="search"] {
 	height:100%;
 	margin:0;
 	padding:0;
-	background:#56c4f3;
+	//background:#56c4f3;
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#56c5f3+1,3290dc+100 */
+	background: #56c5f3; /* Old browsers */
+	background: -moz-linear-gradient(-45deg,  #56c5f3 1%, #3290dc 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(-45deg,  #56c5f3 1%,#3290dc 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(135deg,  #56c5f3 1%,#3290dc 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#56c5f3', endColorstr='#3290dc',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 .main-splash-right-wrap{
 	width:100%;
@@ -176,17 +182,17 @@ input[type="search"] {
 .main-splash-left{
 
 	.metaslider {
-		max-width: 600px;
+		//max-width: 640px;
 	}
 
 	/*see media queries for height*/
-	min-width:100%;
-	text-align:center;
-	margin:0;
+	min-width: 100%;
+	text-align: center;
+	margin: 0;
 	/*border fixes display bug*/
-	border:1px solid transparent;
+	border: 1px solid transparent;
 	/*content dependant settings (some in media queries) */
-	padding-top:1%;
+	//padding-top:1%;
 }
 
 .main-splash-right{
@@ -198,21 +204,22 @@ input[type="search"] {
 	font-family: "omnes-pro",sans-serif;
 	font-weight: 500;
 	font-style: italic;
-	font-size: 1.4em;
+	font-size: 1.6em;
 	color: #fff;
 	/*border fixes display bug*/
 	//border: 1px solid #07569b;
 	/*content dependant settings (some in media queries) */
 	padding-top: 220px;
 	text-shadow: 1px 1px 1px rgba(0,0,0,0.2);
-	background-image: url('../images/keep-your-eyes-on-the-road.jpg');
+	//background-image: url('../images/keep-your-eyes-on-the-road.jpg');
+	background-image: url('../images/dont-drive-and-text.jpg');
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: top center;
 }
 
 .main-splash-left-btm{
-	background:#26a1d5;
+	background: #56c4f2; //#26a1d5;
 	text-align: center;
 	padding:10px;
 	/*min-height:150px;*/
@@ -223,7 +230,7 @@ input[type="search"] {
 }
 
 .main-splash-right-btm{
-	background:#07569b;
+	background: #257dd3; //#07569b;
 	text-align: center;
 	padding:40px 10px 10px 10px;
 	/*min-height:150px;*/
@@ -249,7 +256,7 @@ a.btn-pledge{
 	font-weight:400;
 	font-style: italic;
 	text-transform: uppercase;
-	font-size:1.2em;
+	font-size:1.4em;
 	margin:20px auto;
 }
 a.btn-pledge:hover{
@@ -276,11 +283,17 @@ a.btn-pledge:hover{
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d4edf4', endColorstr='#ffffff',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 
-.spot-spec-radio {
+.spot-spec-radio-wrap {
 	background-image: url('../images/icw-car-drive-bg.jpg');
 	background-position: top center;
 	background-repeat: no-repeat;
 	background-size: cover;
+	padding: 30px 0;
+}
+
+.spot-spec-radio {
+	width: 80%;
+	margin:auto;
 }
 
 /* FRONT PAGE PLEDGES */
@@ -417,7 +430,12 @@ a.btn-pledge:hover{
 	color: #fff;
 }
 
-.zaadii-home {}
+.zaadii-home {
+	//background: rgba(255,255,255,.1);
+	//background-color: rgba(7,86,155,.25);
+	//border-left: 1px solid rgba(255,255,255,.1);
+	//border-right: 1px solid rgba(255,255,255,.1);
+}
 
 .pledge-title{
 	font-family: "omnes-pro",sans-serif;
@@ -445,8 +463,8 @@ a.btn-pledge:hover{
 
 /* non-circle "special" images */
 .special .pledge-wrap img.wp-post-image{
-	width:175px;
-	height:175px;
+	min-width:175px;
+	height:auto;
 	margin:auto;
 	text-align:center;
 	border-radius:0;
@@ -1291,8 +1309,15 @@ img.alignright,
 ---------------------------------------------------------------------------------------------------- */
 
 .site-header {
-	background-color: #fff;
+	//background-color: #fff;
 	min-height: 160px;
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#91d6f2+0,ffffff+33 */
+	background: #91d6f2; /* Old browsers */
+	background: -moz-linear-gradient(top,  #91d6f2 0%, #ffffff 33%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top,  #91d6f2 0%,#ffffff 33%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom,  #91d6f2 0%,#ffffff 33%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#91d6f2', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+
 }
 
 .site-header .wrap {
@@ -1776,7 +1801,7 @@ li.comment {
 @media only screen and (min-width: 1200px){
 
 	.pledges-sticky{
-		width:33%;
+		width:31.623931623931625;
 	}
 	.pledges{
 		height:200px;
@@ -1787,12 +1812,16 @@ li.comment {
 	.main-splash-right{
 		height:400px;
 	}
+	.main-splash-left {
+		max-height: 400px;
+		overflow: hidden;
+	}
 	.main-splash-left-btm,
 	.main-splash-right-btm {
 		height:150px;
 	}
 	.win-this-car{
-		font-size:1.4em;
+		font-size:1.6em;
 		margin:0 0 5px 0;
 		padding:0;
 	}
@@ -1863,14 +1892,19 @@ li.comment {
 	.main-splash-left,
 	.main-splash-right{
 		height:350px;
-
+	}
+	.main-splash-left {
+		overflow: hidden;
+	}
+	.main-splash-right p{
+		font-size: .8em;
 	}
 	.main-splash-left-btm,
 	.main-splash-right-btm {
 		height:150px;
 	}
 	.win-this-car{
-		font-size:1.2em;
+		font-size:1.4em;
 		margin:0 0 5px 0;
 		padding:0;
 	}
@@ -1968,6 +2002,9 @@ li.comment {
 	.main-splash-right{
 		min-height:400px;
 	}
+	.main-splash-right p{
+		font-size: .7em;
+	}
 	.main-splash-left-btm,
 	.main-splash-right-btm {
 		height:120px;
@@ -2059,6 +2096,9 @@ li.comment {
 		height:auto;
 		min-height:auto;
 	}
+	.main-splash-right p{
+		font-size: 1.5em;
+	}
 	.main-splash-right{
 		/*content dependant settings (some in media queries) */
 		padding-top:220px;
@@ -2070,7 +2110,7 @@ li.comment {
 		padding:20px 0;
 	}
 	.win-this-car{
-		font-size:1.5em;
+		font-size:1.6em;
 		margin:0 0 5px 0;
 		padding:0;
 	}
@@ -2110,7 +2150,7 @@ li.comment {
 	}
 
 	.win-this-car{
-		font-size:1.5em;
+		font-size:1.6em;
 		margin:0 0 5px 0;
 		padding:0;
 	}

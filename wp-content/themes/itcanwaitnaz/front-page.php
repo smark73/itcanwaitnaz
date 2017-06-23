@@ -65,7 +65,7 @@ function cust_pg_hdr() {
 
                     }
 
-                    echo '<div class="main-splash-left" style="background:url(' . $msplash_left['the_img'] . ');background-size:contain;background-repeat:no-repeat;background-position:top center;">';
+                    echo '<div class="main-splash-left">';
                     $msplash_left_the_content = apply_filters( 'the_content', $msplash_left['the_content'] );
                     echo $msplash_left_the_content;
                     echo '</div>';
@@ -112,248 +112,264 @@ function page_loop(){
     ?>
             <div class="pledge-grid-wrap">
 
-                <div class="spot-spec-radio">
+                <div class="spot-spec-radio-wrap">
 
-                <?php
-                    //---- SPOTLIGHT & SPECIAL POSTS (top row)
-                    //     We have 1 row of 3 columns
-                    //      [spotlight(random)] [spotlight(random)] [special(Zaadii)]
+                    <div class="spot-spec-radio">
 
-                    //purge('spotlight_posts');
+                    <?php
+                        //---- SPOTLIGHT & SPECIAL POSTS (top row)
+                        //     We have 1 row of 3 columns
+                        //      [spotlight(random)] [spotlight(random)] [special(Zaadii)]
 
-                    //check for transient first
-                    if ( false === ( $spotlight_posts = get_transient( 'spotlight_posts' ) ) ) {
-                        $spotlight = new WP_Query(array(
-                            'category_name' => 'spotlight',
-                            'orderby' => 'rand',
-                            'posts_per_page' => 2,
-                        ));
+                        //purge('spotlight_posts');
 
-                        //the loop
-                        //init array to hold content in transient
-                        $spotlight_posts = array();
+                        //check for transient first
+                        if ( false === ( $spotlight_posts = get_transient( 'spotlight_posts' ) ) ) {
+                            $spotlight = new WP_Query(array(
+                                'category_name' => 'spotlight',
+                                'orderby' => 'rand',
+                                'posts_per_page' => 2,
+                            ));
 
-                        //DEBUG $spotlightcount = 0;
-                        while ( $spotlight->have_posts() ) {
+                            //the loop
+                            //init array to hold content in transient
+                            $spotlight_posts = array();
 
-                            $spotlight->the_post();
-                            global $post;
+                            //DEBUG $spotlightcount = 0;
+                            while ( $spotlight->have_posts() ) {
 
-                            //DEBUG $spotlightcount += 1;
-                            
-                            // get categories to add as classes for sorting with isotope
-                            $post_cats = wp_get_post_categories( $post->ID );
-                            
-                            $this_cats = '';
-                            
-                            foreach( $post_cats as $c ){
-                                $cat = get_category( $c );
-                                $this_cats .= $cat->slug;
-                                $this_cats .= " ";
-                            }
+                                $spotlight->the_post();
+                                global $post;
 
-                            $post_id = $post->ID;
-                            $spotlight_posts[$post_id]['slug'] = $post->post_name;
-                            $spotlight_posts[$post_id]['cats'] = $this_cats;
-                            $spotlight_posts[$post_id]['thumb'] = get_the_post_thumbnail( "thumbnail" );
-                            $spotlight_posts[$post_id]['title'] = get_the_title();
-                            $spotlight_posts[$post_id]['content'] = get_the_content();
-
-                        }
-
-                        //set transient for 1hr
-                        set_transient( 'spotlight_posts', $spotlight_posts, 60*60 );
-
-                    }
-
-                    //display them
-
-                    // count - only showing 2, set first one with class "first"
-                    $spotlight_post_count = 0;
-                    $spotlight_post_first_class = '';
-
-                    foreach( $spotlight_posts as $key => $spotlight_post ){
-
-                        $pledge_slug = $spotlight_post['slug'];
-                        $this_cats = $spotlight_post['cats'];
-                        $this_thumb = $spotlight_post['thumb'];
-                        $this_title = $spotlight_post['title'];
-                        $this_content = $spotlight_post['content'];
-
-                        //count
-                        $spotlight_post_count += 1;
-                        if($spotlight_post_count === 1){
-                            $spotlight_post_first_class = " first "; 
-                        } else {
-                            $spotlight_post_first_class = ""; 
-                        }
-
-                        //wrap the pledge div with link
-                        echo '<a href="' . $pledge_slug . '"><div class="one-third pledges-sticky ' . $this_cats . $spotlight_post_first_class . '">';
-                        echo $this_thumb;
-                        //echo '<figure class="pledge-title">' . $this_title . '</figure>';
-                        echo apply_filters( 'the_content', $this_content );
-                        echo '</div></a>';
-
-                    }
-
-                ?>
-
-                <?php
-                    //---- SPECIAL POSTS (only Zaadii)
-
-                    //purge('special_posts');
-
-                    //special posts - we dont want the content, just the featured image and title
-                    //check for transient first
-                    if ( false === ( $special_posts = get_transient( 'special_posts' ) ) ) {
-                        $special = new WP_Query(array(
-                            'category_name' => 'special',
-                            'orderby' => 'rand',
-                        ));
-                    
-                        //the loop
-                        //init array to hold content in transient
-                        $special_posts = array();
-
-                        //DEBUG $specialcount = 0;
-                        while ( $special->have_posts() ) {
-
-                            $special->the_post();
-                            global $post;
-
-                            //DEBUG $specialcount += 1;
+                                //DEBUG $spotlightcount += 1;
                                 
-                            // get categories to add as classes for sorting with isotope
-                            $post_cats = wp_get_post_categories( $post->ID );
-                            
-                            $this_cats = '';
-                            
-                            foreach( $post_cats as $c ){
-                                $cat = get_category( $c );
-                                $this_cats .= $cat->slug;
-                                $this_cats .= " ";
+                                // get categories to add as classes for sorting with isotope
+                                $post_cats = wp_get_post_categories( $post->ID );
+                                
+                                $this_cats = '';
+                                
+                                foreach( $post_cats as $c ){
+                                    $cat = get_category( $c );
+                                    $this_cats .= $cat->slug;
+                                    $this_cats .= " ";
+                                }
+
+                                $post_id = $post->ID;
+                                $spotlight_posts[$post_id]['slug'] = $post->post_name;
+                                $spotlight_posts[$post_id]['cats'] = $this_cats;
+                                $spotlight_posts[$post_id]['thumb'] = get_the_post_thumbnail( "thumbnail" );
+                                $spotlight_posts[$post_id]['title'] = get_the_title();
+                                $spotlight_posts[$post_id]['content'] = get_the_content();
+
                             }
 
-                            $post_id = $post->ID;
-                            $special_posts[$post_id]['slug'] = $post->post_name;
-                            $special_posts[$post_id]['cats'] = $this_cats;
-                            $special_posts[$post_id]['thumb'] = get_the_post_thumbnail( $post->ID, "thumbnail" );
-                            $special_posts[$post_id]['title'] = get_the_title();
+                            //set transient for 1hr
+                            set_transient( 'spotlight_posts', $spotlight_posts, 60*60 );
 
                         }
 
-                        //set transient for 1hr
-                        set_transient( 'special_posts', $special_posts, 60*60 );
+                        //display them
 
-                    }
+                        // count - only showing 2, set first one with class "first"
+                        $spotlight_post_count = 0;
+                        $spotlight_post_first_class = '';
 
-                    //display them
-                    foreach ($special_posts as $key => $special_post) {
+                        foreach( $spotlight_posts as $key => $spotlight_post ){
+
+                            $pledge_slug = $spotlight_post['slug'];
+                            $this_cats = $spotlight_post['cats'];
+                            $this_thumb = $spotlight_post['thumb'];
+                            $this_title = $spotlight_post['title'];
+                            $this_content = $spotlight_post['content'];
+
+                            //count
+                            $spotlight_post_count += 1;
+                            if($spotlight_post_count === 1){
+                                $spotlight_post_first_class = " first "; 
+                            } else {
+                                $spotlight_post_first_class = ""; 
+                            }
+
+                            //wrap the pledge div with link
+                            echo '<a href="' . $pledge_slug . '"><div class="one-third pledges-sticky ' . $this_cats . $spotlight_post_first_class . '">';
+                            echo $this_thumb;
+                            //echo '<figure class="pledge-title">' . $this_title . '</figure>';
+                            echo apply_filters( 'the_content', $this_content );
+                            echo '</div></a>';
+
+                        }
+
+                    ?>
+
+                    <?php
+                        //---- SPECIAL POSTS (only Zaadii)
+
+                        //purge('special_posts');
+
+                        //special posts - we dont want the content, just the featured image and title
+                        //check for transient first
+                        if ( false === ( $special_posts = get_transient( 'special_posts' ) ) ) {
+                            $special = new WP_Query(array(
+                                'category_name' => 'special',
+                                'orderby' => 'rand',
+                            ));
                         
-                        $pledge_slug = $special_post['slug'];
-                        $this_cats = $special_post['cats'];
-                        $this_thumb = $special_post['thumb'];
-                        $this_title = $special_post['title'];
+                            //the loop
+                            //init array to hold content in transient
+                            $special_posts = array();
 
-                        //wrap the pledge div with link
-                        echo '
-                            <a href="' . $pledge_slug . '">
-                                <div class="one-third zaadii-home pledges-sticky ' . $this_cats . '">
-                                    <div class="pledge-wrap">
-                            ';
-                                        echo $this_thumb;
-                                        echo '<figure class="pledge-title">' . $this_title . '</figure>';
-                        echo '
-                                        <div class="view-share vsHide">
-                                            <img src="/wp-content/themes/itcanwaitnaz/images/view-share.png">
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                            ';
-                    }
+                            //DEBUG $specialcount = 0;
+                            while ( $special->have_posts() ) {
 
-                ?>
+                                $special->the_post();
+                                global $post;
 
-                <?php
-                    //---- RADIO SPOTS
+                                //DEBUG $specialcount += 1;
+                                    
+                                // get categories to add as classes for sorting with isotope
+                                $post_cats = wp_get_post_categories( $post->ID );
+                                
+                                $this_cats = '';
+                                
+                                foreach( $post_cats as $c ){
+                                    $cat = get_category( $c );
+                                    $this_cats .= $cat->slug;
+                                    $this_cats .= " ";
+                                }
 
-                    //purge('radiospots_posts');
+                                $post_id = $post->ID;
+                                $special_posts[$post_id]['slug'] = $post->post_name;
+                                $special_posts[$post_id]['cats'] = $this_cats;
+                                $special_posts[$post_id]['thumb'] = get_the_post_thumbnail( $post->ID, "full" );
+                                $special_posts[$post_id]['title'] = get_the_title();
 
-                    //check for transient first
-                    if ( false === ( $radiospots_posts = get_transient( 'radiospots_posts' ) ) ) {
-                        $radiospots = new WP_Query(array(
-                            'category_name' => 'radio-spots',
-                            'orderby' => 'DESC'
-                        ));
-
-                        //the loop
-                        //init array to hold content in transient
-                        $radiospots_posts = array();
-
-                        while ( $radiospots->have_posts() ) {
-
-                            $radiospots->the_post();
-                            global $post;
-
-                            // get categories to add as classes for sorting with isotope
-                            $post_cats = wp_get_post_categories( $post->ID );
-                            
-                            $this_cats = '';
-                            
-                            foreach( $post_cats as $c ){
-                                $cat = get_category( $c );
-                                $this_cats .= $cat->slug;
-                                $this_cats .= " ";
                             }
 
-                            $post_id = $post->ID;
-                            $radiospots_posts[$post_id]['slug'] = $post->post_name;
-                            $radiospots_posts[$post_id]['cats'] = $this_cats;
-                            $radiospots_posts[$post_id]['thumb'] = get_the_post_thumbnail( $post_id, "thumbnail" );
-                            $radiospots_posts[$post_id]['title'] = get_the_title();
-                            $radiospots_posts[$post_id]['content'] = get_the_content();
+                            //set transient for 1hr
+                            set_transient( 'special_posts', $special_posts, 60*60 );
 
                         }
 
-                        //set transient for 1hr
-                        set_transient( 'radiospots', $radiospots_posts, 60*60 );
+                        //display them
+                        foreach ($special_posts as $key => $special_post) {
+                            
+                            $pledge_slug = $special_post['slug'];
+                            $this_cats = $special_post['cats'];
+                            $this_thumb = $special_post['thumb'];
+                            $this_title = $special_post['title'];
 
-                    }
-
-                    // display them
-                    foreach ($radiospots_posts as $key => $radiospots_post) {
-
-                        $pledge_slug = $radiospots_post['slug'];
-                        $this_cats = $radiospots_post['cats'];
-                        $this_thumb = $radiospots_post['thumb'];
-                        $this_title = $radiospots_post['title'];
-                        $this_content = $radiospots_post['content'];
-
-                        //wrap the pledge div with link
-                        echo '
-                            <a href="' . $pledge_slug . '">
-                                <div class="one-fourth pledges ' . $this_cats . '">
-                                    <div class="pledge-wrap">
-                            ';
-                                        echo $this_thumb;
-                                        echo '<figure class="pledge-title">' . $this_title . '</figure>';
-                                        echo apply_filters( 'the_content', $this_content );
-                        echo '
-                                        <div class="view-share vsHide">
-                                            <img src="/wp-content/themes/itcanwaitnaz/images/view-share.png">
+                            //wrap the pledge div with link
+                            echo '
+                                <a href="' . $pledge_slug . '">
+                                    <div class="one-third zaadii-home pledges-sticky ' . $this_cats . '">
+                                        <div class="pledge-wrap">
+                                ';
+                                            echo $this_thumb;
+                                            echo '<figure class="pledge-title">' . $this_title . '</figure>';
+                            echo '
+                                            <div class="view-share vsHide">
+                                                <img src="/wp-content/themes/itcanwaitnaz/images/view-share.png">
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </a>
-                            ';
-                    }
+                                </a>
+                                ';
+                        }
 
-                ?>
+                    ?>
 
-                <div class="clearfix"></div>
-                </div><!-- spot-spec-radio -->
+                    <?php
+                        //---- RADIO SPOTS
+
+                        //purge('radiospots_posts');
+
+                        //check for transient first
+                        if ( false === ( $radiospots_posts = get_transient( 'radiospots_posts' ) ) ) {
+                            $radiospots = new WP_Query(array(
+                                'category_name' => 'radio-spots',
+                                'orderby' => 'DESC'
+                            ));
+
+                            //the loop
+                            //init array to hold content in transient
+                            $radiospots_posts = array();
+
+                            while ( $radiospots->have_posts() ) {
+
+                                $radiospots->the_post();
+                                global $post;
+
+                                // get categories to add as classes for sorting with isotope
+                                $post_cats = wp_get_post_categories( $post->ID );
+                                
+                                $this_cats = '';
+                                
+                                foreach( $post_cats as $c ){
+                                    $cat = get_category( $c );
+                                    $this_cats .= $cat->slug;
+                                    $this_cats .= " ";
+                                }
+
+                                $post_id = $post->ID;
+                                $radiospots_posts[$post_id]['slug'] = $post->post_name;
+                                $radiospots_posts[$post_id]['cats'] = $this_cats;
+                                $radiospots_posts[$post_id]['thumb'] = get_the_post_thumbnail( $post_id, "thumbnail" );
+                                $radiospots_posts[$post_id]['title'] = get_the_title();
+                                $radiospots_posts[$post_id]['content'] = get_the_content();
+
+                            }
+
+                            //set transient for 1hr
+                            set_transient( 'radiospots', $radiospots_posts, 60*60 );
+
+                        }
+
+                        // display them
+                        
+                        // count - only showing 4, set first one with class "first"
+                        $radio_post_count = 0;
+                        $radio_post_first_class = '';
+
+                        foreach ($radiospots_posts as $key => $radiospots_post) {
+
+                            $pledge_slug = $radiospots_post['slug'];
+                            $this_cats = $radiospots_post['cats'];
+                            $this_thumb = $radiospots_post['thumb'];
+                            $this_title = $radiospots_post['title'];
+                            $this_content = $radiospots_post['content'];
+
+                            //count
+                            $radio_post_count += 1;
+                            if($radio_post_count === 1){
+                                $radio_post_first_class = " first "; 
+                            } else {
+                                $radio_post_first_class = ""; 
+                            }
+
+                            //wrap the pledge div with link
+                            echo '
+                                <a href="' . $pledge_slug . '">
+                                    <div class="one-fourth pledges ' . $this_cats . $radio_post_first_class . '">
+                                        <div class="pledge-wrap">
+                                ';
+                                            echo $this_thumb;
+                                            echo '<figure class="pledge-title">' . $this_title . '</figure>';
+                                            echo apply_filters( 'the_content', $this_content );
+                            echo '
+                                            <div class="view-share vsHide">
+                                                <img src="/wp-content/themes/itcanwaitnaz/images/view-share.png">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                                ';
+                        }
+
+                    ?>
+
+                    <div class="clearfix"></div>
+                    </div>
+                </div><!-- spot-spec-radio-wrap -->
 
                 <?php
 
