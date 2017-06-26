@@ -471,10 +471,10 @@ function child_theme_setup(){
         $pledge_sort = isset( $_POST['pledge_sort'] ) ? esc_attr( $_POST['pledge_sort'] ) : 'rand';
 
         switch( $pledge_sort ) {
-            case 'rand':
-                $args['orderby'] = 'date';
-                $args['order']   = 'rand';
-                break;
+            //case 'rand':
+                //$args['orderby'] = 'date';
+                //$args['order']   = 'rand';
+                //break;
                 
             case 'pledge_date':
                 $args['orderby'] = 'date';
@@ -502,19 +502,32 @@ function child_theme_setup(){
         }
 
         //print_r($args);
-     
-        $query = new WP_Query( $args );
-     
-        if( $query->have_posts() ) :
-            while( $query->have_posts() ): $query->the_post();
+
+        //PURGE
+        //purge('sorted_query_' . $pledge_sort);
+
+        //check for transient first
+        if ( false === ( $sorted_query = get_transient( 'sorted_query_' . $pledge_sort ) ) ) {
+            $sorted_query = new WP_Query( $args );
+            //set transient for 1hr
+            set_transient( 'sorted_query_' . $pledge_sort, $sorted_query, 60*60 );
+        }
+
+        //display them
+        if( $sorted_query->have_posts() ) {
+            while ( $sorted_query->have_posts() ) {
+                $sorted_query->the_post();
+                global $post;
                 display_pledges();
-            endwhile;
-            wp_reset_postdata();
-        else :
-            echo 'No posts found';
-        endif;
-     
-        die();
+            }
+
+        } else {
+            echo "Sorry, there was an error getting pledges";
+        }
+
+        wp_reset_postdata();
+        wp_die();
+
     }
     add_action('wp_ajax_sortFilter', 'pledge_filter_function'); 
     add_action('wp_ajax_nopriv_sortFilter', 'pledge_filter_function');

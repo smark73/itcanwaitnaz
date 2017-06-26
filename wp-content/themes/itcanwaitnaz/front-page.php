@@ -396,7 +396,6 @@ function page_loop(){
                                         <option value="pledge_date_rev">Date (old first)</option>
                                         <option value="pledge_title">Title (A-Z)</option>
                                         <option value="pledge_title_rev">Title (Z-A)</option>
-                                        <option value="pledge_rand">Random Order</option>
                                     </select>
                                     <input type="submit" name="sortbtn" value="Go">
                                     <input type="hidden" name="action" value="sortFilter">
